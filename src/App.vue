@@ -121,7 +121,7 @@ const smallMenu = ref(false)
       </v-navigation-drawer>
       <v-main>
         <div v-if="loggedIn && loaded">
-          <router-view :ip="ip" :toastRef="toastComponentRef" :user="user" v-if="user.role !=='student' || (user.role === 'student' && user.group)"></router-view>
+          <router-view :ip="ip" :toastRef="toastComponentRef" :user="user" v-if="user.role !=='student' || (user.role === 'student' && user.group && user.changedPassword)"></router-view>
           <OnboardingView v-else :ip="ip" :toastRef="toastComponentRef" :user="user" />
         </div>
         <AuthComponent :getUserInfo="getUserInfo" :ip="ip" :toastRef="toastComponentRef" v-if="!loggedIn && loaded" />

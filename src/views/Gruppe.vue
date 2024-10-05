@@ -18,6 +18,9 @@ const showAddUser = ref(false)
 const showRemoveConfirmation = ref(false)
 const userToRemove = ref("")
 
+const startDate = ref(new Date())
+const endDate = ref(new Date())
+
 
 async function fetchGroup() {
   try {
@@ -25,6 +28,7 @@ async function fetchGroup() {
 
     if(response.status === 200) {
       group.value = response.data
+      startDate.value = new Date(group.value.startDate).toLocaleDateString()
     }
   } catch (error) {
     props.toastRef.show({
@@ -101,10 +105,13 @@ async function removeUser() {
             <v-btn flat icon><v-icon icon="mdi-pencil"></v-icon></v-btn>
           </template>
           <v-card-text>
-            <p><b>Name:</b> {{ group.name }}</p>
-            <p><b>Projektart:</b> {{ group.type }}</p>
-            <p><b>Startdatum:</b> {{ new Date(group.startDate).toLocaleDateString() }}</p>
-            <p><b>Enddatum:</b> {{ group.endDate === null ? "Noch offen" : new Date(group.endDate).toLocaleDateString() }}</p>
+            <v-text-field label="Name" v-model="group.name" readonly></v-text-field>
+            <v-text-field label="Projektart" v-model="group.type" readonly></v-text-field>
+            <h3>Zeitraum</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px; margin-top: 10px">
+              <v-text-field label="Startdatum" v-model="startDate" readonly></v-text-field>
+              <v-text-field label="Enddatum" v-model="group.endDate" readonly></v-text-field>
+            </div>
           </v-card-text>
         </v-card>
         <v-card title="Mitglieder">

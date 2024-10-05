@@ -43,6 +43,7 @@ async function joinGroup() {
         color: "info"
       })
       step.value = 3
+      reloadPage()
     }
   } catch (error) {
     props.toastRef.show({
@@ -72,6 +73,7 @@ async function createGroup() {
       newGroup.name = ""
       newGroup.type = null
       step.value = 3
+      reloadPage()
     }
   } catch (error) {
     props.toastRef.show({
@@ -130,18 +132,26 @@ async function updatePassword() {
       newPassword.value = ""
       newPasswordRepeat.value = ""
       step.value = 2
+      if (props.user.group) {
+        step.value = 3
+        reloadPage()
+      }
     } else {
       props.toastRef.show({
-        message: "Das alte Passwort ist falsch.",
+        message: "Ein Fehler ist aufgetreten.",
         color: "red"
       })
     }
   } catch(error) {
     props.toastRef.show({
-      message: "Das alte Passwort ist falsch.",
+      message: "Ein Fehler ist aufgetreten.",
       color: "red"
     })
   }
+}
+
+function reloadPage() {
+  location.reload()
 }
 
 
@@ -166,7 +176,7 @@ async function updatePassword() {
       </v-card>
       <v-card :elevation="step !== 2 ? 0 : 2" :disabled="step !== 2">
         <v-card-text>
-              <h2><v-chip color="info">Schritt 2</v-chip> Gruppe beitreten/erstellen</h2>
+              <h2><v-chip :color="step > 2 ? 'success' : 'info'">Schritt 2</v-chip> Gruppe beitreten/erstellen</h2>
               <p style="margin-top: 10px">Möchtest du eine neue Gruppe erstellen oder einer bereits vorhandenen Gruppe beitreten?</p>
               <v-tabs v-model="currentTab" fixed-tabs grow>
                 <v-tab value="beitreten" text="beitreten"></v-tab>
