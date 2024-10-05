@@ -1,6 +1,6 @@
 <script setup>
 
-const props = defineProps(["ip", "toastRef"])
+const props = defineProps(["ip", "toastRef", "user"])
 import {onMounted, ref, defineProps} from 'vue'
 import axios from 'axios'
 
@@ -88,6 +88,11 @@ async function changePassword() {
             ></v-text-field>
             <v-btn @click="changePassword" color="primary">Passwort ändern</v-btn>
           </v-form>
+        </v-card-text>
+      </v-card>
+      <v-card title="Benutzerspezifisches">
+        <v-card-text>
+          <v-text-field disabled label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
         </v-card-text>
       </v-card>
     </div>

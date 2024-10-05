@@ -31,6 +31,11 @@ async function getGroups() {
   }
 }
 
+function handleRowClick(event, item) {
+  router.push(`/gruppen/${item.item.id}`)
+
+}
+
 </script>
 
 <template>
@@ -50,6 +55,7 @@ async function getGroups() {
       :items="groups"
         items-per-page-text="Gruppen pro Seite:"
         page-text="Gruppen {0} bis {1} von insg. {2}"
+        @click:row="handleRowClick"
     >
       <template v-slot:item.startDate="{ item }">
         <span>{{ new Date(item.startDate).toLocaleString() }}</span>

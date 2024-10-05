@@ -80,11 +80,19 @@ const smallMenu = ref(false)
               nav
 
           >
-            <v-list-item link to="/" prepend-icon="mdi-view-dashboard" title="Startseite" value="home"></v-list-item>
-            <v-list-item link to="/benutzerverwaltung" prepend-icon="mdi-account-cog" title="Benutzerverwaltung" value="benutzerverwaltung"></v-list-item>
-            <v-list-item link to="/klassen" prepend-icon="mdi-book-variant" title="Klassen" value="klassen"></v-list-item>
-            <v-list-item link to="/gruppen" prepend-icon="mdi-account-multiple" title="Gruppen" value="gruppen"></v-list-item>
-            <v-list-item link to="/antraege" prepend-icon="mdi-note-alert" title="Anträge" value="antraege"></v-list-item>
+            <div v-if="user.role !== 'student'">
+              <v-list-item link to="/" prepend-icon="mdi-view-dashboard" title="Startseite" value="home"></v-list-item>
+              <v-list-item link to="/benutzerverwaltung" prepend-icon="mdi-account-cog" title="Benutzerverwaltung" value="benutzerverwaltung"></v-list-item>
+              <v-list-item link to="/klassen" prepend-icon="mdi-book-variant" title="Klassen" value="klassen"></v-list-item>
+              <v-list-item link to="/gruppen" prepend-icon="mdi-account-multiple" title="Gruppen" value="gruppen"></v-list-item>
+              <v-list-item link to="/antraege" prepend-icon="mdi-note-alert" title="Anträge" value="antraege"></v-list-item>
+            </div>
+            <div v-else>
+              <v-list-item link to="/" prepend-icon="mdi-view-dashboard" title="Startseite" value="home"></v-list-item>
+              <v-list-item link to="/gruppe" prepend-icon="mdi-account-multiple" title="Meine Gruppe" value="gruppe"></v-list-item>
+              <v-list-item link to="/antraege" prepend-icon="mdi-note-alert" title="Meine Anträge" value="antraege"></v-list-item>
+              <v-list-item link to="/pinnwand" prepend-icon="mdi-pin" title="Meine Pinnwand" value="pinnwand"></v-list-item>
+            </div>
           </v-list>
         </div>
         <div v-else>
@@ -113,7 +121,7 @@ const smallMenu = ref(false)
       </v-navigation-drawer>
       <v-main>
         <div v-if="loggedIn && loaded">
-          <router-view :ip="ip" :toastRef="toastComponentRef" v-if="user.role !=='student' || (user.role === 'student' && user.group)"></router-view>
+          <router-view :ip="ip" :toastRef="toastComponentRef" :user="user" v-if="user.role !=='student' || (user.role === 'student' && user.group)"></router-view>
           <OnboardingView v-else :ip="ip" :toastRef="toastComponentRef" :user="user" />
         </div>
         <AuthComponent :getUserInfo="getUserInfo" :ip="ip" :toastRef="toastComponentRef" v-if="!loggedIn && loaded" />

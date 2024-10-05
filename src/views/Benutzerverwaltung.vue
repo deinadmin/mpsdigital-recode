@@ -142,7 +142,9 @@ async function addUser() {
       </tr>
       </tbody>
     </v-table>
-    <v-progress-circular v-else size="40" indeterminate></v-progress-circular>
+    <div v-else class="flex-center">
+      <v-progress-circular size="40" indeterminate></v-progress-circular>
+    </div>
     <v-fab style="position: fixed; right: 60px; bottom: 35px" color="primary" icon="mdi-plus" @click="openDialog"></v-fab>
     <v-dialog width="500px" v-model="showAddUser">
       <v-card

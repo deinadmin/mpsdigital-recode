@@ -154,7 +154,7 @@ async function updatePassword() {
     <h1>Willkommen bei mPSdigital!</h1>
     <p>Bevor du mit der Nutzung von mPSdigital beginnen kannst, musst du ein paar Schritte erledigen.</p>
     <v-divider style="margin: 15px 0" />
-    <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px; margin-right: 10px">
+    <div class="two-grid">
       <v-card :elevation="step !== 1 ? 0 : 2" :disabled="step !== 1">
         <v-card-text>
           <h2><v-chip :color="step > 1 ? 'success' : 'info'">Schritt 1</v-chip> Passwort aktualisieren</h2>

@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('../views/Gruppen.vue')
     },
     {
+      path: '/gruppen/:id',
+      name: 'einzelgruppe',
+      component: () => import('../views/Gruppe.vue')
+    },
+    {
       path: '/klassen',
       name: 'klassen',
       component: () => import('../views/Klassen.vue')
@@ -33,6 +38,11 @@ const router = createRouter({
       path: '/einstellungen',
       name: 'einstellungen',
       component: () => import('../views/Einstellungen.vue')
+    },
+    {
+      path: '/gruppe',
+      name: 'gruppe',
+      component: () => import('../views/MeineGruppe.vue')
     },
   ]
 })
