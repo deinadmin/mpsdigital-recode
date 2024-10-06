@@ -49,6 +49,11 @@ const router = createRouter({
       name: 'pinnwand',
       component: () => import('../views/Pinnwand.vue')
     },
+    {
+      path: '/antraege',
+      name: 'antraege',
+      component: () => import('../views/MeineAnträge.vue')
+    },
   ]
 })
 

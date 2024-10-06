@@ -22,3 +22,9 @@
     align-items: center;
   height: 100%;
 }
+
+.floating-btn {
+  position: fixed;
+  right: 60px;
+  bottom: 35px
+}

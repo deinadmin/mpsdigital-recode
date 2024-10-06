@@ -103,7 +103,7 @@ async function addForm() {
       </tr>
       </tbody>
     </v-table>
-    <v-fab style="position: fixed; right: 60px; bottom: 35px" color="primary" icon="mdi-plus" @click="openDialog"></v-fab>
+    <v-fab class="floating-btn" color="primary" icon="mdi-plus" @click="openDialog"></v-fab>
     <v-dialog width="500px" v-model="showAddForm">
       <v-card
           prepend-icon="mdi-account-multiple-plus"

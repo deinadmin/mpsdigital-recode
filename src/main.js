@@ -8,10 +8,14 @@ import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
 const app = createApp(App)
 import "@/assets/main.css"
+import { VDateInput } from 'vuetify/labs/VDateInput'
 
 app.use(router)
 app.use(createVuetify({
-    components,
+    components: {
+        ...components,
+        VDateInput,
+    },
     directives,
 }))
 
