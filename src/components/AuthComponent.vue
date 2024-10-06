@@ -70,7 +70,7 @@ async function login() {
     <v-card :loading="loading" width="400">
       <v-card-title><b>Willkommen bei mPSdigital!</b></v-card-title>
       <v-card-text>
-        <v-text-field :disabled="loading" style="margin-bottom: 5px" hint="Dein IServ-Benutzername (z. B. max.mustermann)" variant="solo" single-line density="comfortable" label="Benutzername" v-model="username"></v-text-field>
+        <v-text-field suffix="@mps-ki.de" :disabled="loading" style="margin-bottom: 5px" hint="Dein IServ-Benutzername (z. B. max.mustermann)" variant="solo" single-line density="comfortable" label="Benutzername" v-model="username"></v-text-field>
         <v-text-field :disabled="loading" variant="solo" single-line density="comfortable" label="Passwort" v-model="password" outlined type="password"></v-text-field>
         <v-btn color="primary" variant="elevated" @click="login" :disabled="loading">Login</v-btn>
       </v-card-text>

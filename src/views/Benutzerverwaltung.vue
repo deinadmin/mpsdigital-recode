@@ -3,6 +3,7 @@ import axios from "axios";
 
 const props = defineProps(["ip", "toastRef"])
 import {onMounted, ref, defineProps} from 'vue'
+import BenutzerComponent from "@/components/BenutzerComponent.vue";
 
 const users = ref([])
 const showAddUser = ref(false)
@@ -111,40 +112,35 @@ async function addUser() {
     })
   }
 }
+
+const currentUsername = ref("")
+const showUserDialog = ref(false)
+
+function openUserDialog(event, item) {
+  currentUsername.value = item.item.username
+  showUserDialog.value = true
+}
 </script>
 
 <template>
   <div>
     <h1 class="main">Benutzerverwaltung</h1>
-    <v-table
-        v-if="users.length > 0"
-        fixed-header
+    <v-data-table
         hover
-        density="comfortable"
+        :loading="users.length === 0"
+        :headers="[
+          { title: 'Benutzername', value: 'username' },
+          { title: 'Rolle', value: 'role' },
+        ]"
+        :items="users"
+        items-per-page-text="Benutzer pro Seite:"
+        page-text="Benutzer {0} bis {1} von insg. {2}"
+      @click:row="openUserDialog"
     >
-      <thead>
-      <tr>
-        <th class="text-left">
-          <b>Benutzername</b>
-        </th>
-        <th class="text-left">
-          <b>Rolle</b>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr
-          v-for="user in users"
-          :key="user.username"
-      >
-        <td @click="resetPass(user.username)">{{ user.username }}</td>
-        <td>{{ user.role }}</td>
-      </tr>
-      </tbody>
-    </v-table>
-    <div v-else class="flex-center">
-      <v-progress-circular size="40" indeterminate></v-progress-circular>
-    </div>
+      <template v-slot:item.role="{item}">
+        {{ item.role === "student" ? "Schüler" : item.role === "teacher" ? "Lehrer" : "Admin" }}
+      </template>
+    </v-data-table>
     <v-fab style="position: fixed; right: 60px; bottom: 35px" color="primary" icon="mdi-plus" @click="openDialog"></v-fab>
     <v-dialog width="500px" v-model="showAddUser">
       <v-card
@@ -177,6 +173,9 @@ async function addUser() {
           <v-btn color="error" @click="showAddUser = false">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
+    </v-dialog>
+    <v-dialog width="600px" v-model="showUserDialog">
+      <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" />
     </v-dialog>
   </div>
 </template>

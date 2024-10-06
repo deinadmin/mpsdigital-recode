@@ -9,6 +9,7 @@ import {onMounted, ref} from 'vue'
 import AuthComponent from "@/components/AuthComponent.vue";
 import axios from 'axios'
 import ToastComponent from "@/components/ToastComponent.vue";
+import {useRouter} from "vue-router";
 
 const loaded = ref(false)
 const loggedIn = ref(false)
@@ -18,8 +19,10 @@ onMounted(async () => {
   await getUserInfo()
   console.log(user.value)
 })
+const router = useRouter()
 
 async function logOut() {
+  router.push("/")
   try {
     await axios.get(ip + "logout", {withCredentials: true})
     loggedIn.value = false
@@ -65,7 +68,7 @@ const smallMenu = ref(false)
           <v-app-bar-nav-icon v-if="loggedIn" @click="smallMenu = !smallMenu"></v-app-bar-nav-icon>
         </template>
         <template v-slot:append>
-          <v-btn @click="logOut" icon="mdi-logout"></v-btn>
+          <v-btn v-if="loggedIn" @click="logOut" icon="mdi-logout"></v-btn>
         </template>
       </v-app-bar>
       <v-navigation-drawer
@@ -100,12 +103,11 @@ const smallMenu = ref(false)
               density="compact"
               nav
           >
-            <v-skeleton-loader type="list-item"></v-skeleton-loader>
-            <v-skeleton-loader type="list-item"></v-skeleton-loader>
-            <v-skeleton-loader type="list-item"></v-skeleton-loader>
-            <v-skeleton-loader type="list-item"></v-skeleton-loader>
-            <v-skeleton-loader type="list-item"></v-skeleton-loader>
-            <v-skeleton-loader type="list-item"></v-skeleton-loader>
+            <v-skeleton-loader boilerplate type="list-item"></v-skeleton-loader>
+            <v-skeleton-loader boilerplate type="list-item"></v-skeleton-loader>
+            <v-skeleton-loader boilerplate type="list-item"></v-skeleton-loader>
+            <v-skeleton-loader boilerplate type="list-item"></v-skeleton-loader>
+            <v-skeleton-loader boilerplate type="list-item"></v-skeleton-loader>
           </v-list>
         </div>
         <template v-slot:append>
