@@ -57,9 +57,9 @@ const smallMenu = ref(false)
 
 <template>
 
-  <v-app>
+  <v-app  style="height: 100%">
     <ToastComponent ref="toastComponentRef" />
-    <v-layout>
+    <v-layout  style="height: 100%">
       <v-app-bar color="primary" density="compact" title="mPSdigital">
         <template v-slot:prepend>
           <v-app-bar-nav-icon v-if="loggedIn" @click="smallMenu = !smallMenu"></v-app-bar-nav-icon>
@@ -119,8 +119,8 @@ const smallMenu = ref(false)
           </div>
         </template>
       </v-navigation-drawer>
-      <v-main>
-        <div v-if="loggedIn && loaded">
+      <v-main style="height: 100%">
+        <div v-if="loggedIn && loaded" style="height: 100%">
           <router-view :ip="ip" :toastRef="toastComponentRef" :user="user" v-if="user.role !=='student' || (user.role === 'student' && user.group && user.changedPassword)"></router-view>
           <OnboardingView v-else :ip="ip" :toastRef="toastComponentRef" :user="user" />
         </div>

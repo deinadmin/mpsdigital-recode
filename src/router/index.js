@@ -44,6 +44,11 @@ const router = createRouter({
       name: 'gruppe',
       component: () => import('../views/MeineGruppe.vue')
     },
+    {
+      path: '/pinnwand',
+      name: 'pinnwand',
+      component: () => import('../views/Pinnwand.vue')
+    },
   ]
 })
 

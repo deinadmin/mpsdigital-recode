@@ -64,6 +64,7 @@ async function addForm() {
       message: "Es ist ein Fehler aufgetreten.",
       color: "red"
     })
+    console.log(error)
   }
 }
 </script>
