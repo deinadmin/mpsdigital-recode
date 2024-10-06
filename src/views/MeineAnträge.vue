@@ -117,6 +117,9 @@ async function addExcursion() {
           {{ item.status === 'pending' ? 'Ausstehend' : item.status === 'accepted' ? 'Angenommen' : 'Abgelehnt' }}
         </v-chip>
       </template>
+      <template v-slot:item.date="{ item }">
+        <span>{{ new Date(item.date).toLocaleDateString() }}</span>
+      </template>
     </v-data-table>
   </div>
 </template>

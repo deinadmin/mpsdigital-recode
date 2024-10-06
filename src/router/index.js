@@ -52,7 +52,7 @@ const router = createRouter({
     {
       path: '/antraege',
       name: 'antraege',
-      component: () => import('../views/MeineAnträge.vue')
+      component: () => import('../views/Antraege.vue')
     },
   ]
 })
