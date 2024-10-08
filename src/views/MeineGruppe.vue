@@ -37,6 +37,7 @@ async function fetchGroup() {
   }
 }
 
+
 </script>
 
 <template>
@@ -54,7 +55,7 @@ async function fetchGroup() {
       <v-card title="Mitglieder">
         <v-card-text>
           <v-list density="compact" nav>
-            <v-list-item prepend-icon="mdi-account" link v-for="student in group.members">{{ student.user.username }}</v-list-item>
+            <v-list-item prepend-icon="mdi-account" link v-for="student in group.members" @click="openUserDialog(student.username)">{{ student.username }}</v-list-item>
           </v-list>
         </v-card-text>
       </v-card>

@@ -6,6 +6,7 @@ const props = defineProps(["ip", "toastRef", "user"])
 import {onMounted, ref, defineProps} from 'vue'
 import axios from 'axios'
 
+
 const route = useRoute()
 
 onMounted(async () => {
@@ -22,7 +23,7 @@ const startDate = ref(new Date())
 const endDate = ref(null)
 
 
-async function fetchGroup() {
+const fetchGroup = async () => {
   try {
     const response = await axios.get(props.ip + "group/" + route.params.id, {withCredentials: true})
 
@@ -144,16 +145,24 @@ async function getUsers() {
   }
 }
 
+const showUserDialog = ref(false)
+const currentUsername = ref("")
+
+function openUserDialog(username) {
+  currentUsername.value = username
+  showUserDialog.value = true
+}
+
 </script>
 
 <template>
-  <div class="main">
+  <div class="main" style="margin-top:0px; height: 100%; padding-top: 10px">
     <div v-if="group">
       <h1>Gruppe</h1>
       <div class="two-grid">
         <v-card title="Informationen">
           <template v-slot:append>
-            <v-alert v-if="editing" density="compact" type="info" style="margin-right: 10px">Nicht vergessen, die Änderungen zu speichern!</v-alert>
+            <v-alert v-if="editing" density="compact" type="info" style="margin-right: 10px">Denke daran, die Änderungen zu speichern!</v-alert>
             <v-btn flat icon @click="editGroup"><v-icon :color="editing ? 'success' : ''" :icon="editing ? 'mdi-check' : 'mdi-pencil'"></v-icon></v-btn>
           </template>
           <v-card-text>
@@ -174,10 +183,10 @@ async function getUsers() {
           </template>
           <v-card-text>
             <v-list density="compact" nav>
-              <v-list-item prepend-icon="mdi-account" v-for="student in group.members">
-                {{ student.user.username }}
+              <v-list-item @click="openUserDialog(student.username)" prepend-icon="mdi-account" v-for="student in group.members">
+                {{ student.username }}
                 <template v-slot:append>
-                  <v-btn @click="() => {showRemoveConfirmation = true; userToRemove = student }" flat icon><v-icon color="red" icon="mdi-close-circle"></v-icon></v-btn>
+                  <v-btn @click="() => {showRemoveConfirmation = true; userToRemove = student.username }" flat icon><v-icon color="red" icon="mdi-close-circle"></v-icon></v-btn>
                 </template>
               </v-list-item>
             </v-list>
@@ -214,6 +223,9 @@ async function getUsers() {
           <v-btn @click="showRemoveConfirmation = false">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
+    </v-dialog>
+    <v-dialog width="700px" v-model="showUserDialog">
+      <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" :fetchUserInfo="fetchGroup" />
     </v-dialog>
   </div>
 </template>
