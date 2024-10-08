@@ -128,6 +128,22 @@ async function editGroup() {
   }
 }
 
+const users = ref([])
+
+async function getUsers() {
+  try {
+    const response = await axios.get(props.ip + "user", {withCredentials: true})
+    if(response.status === 200) {
+      users.value = response.data.filter(user => user.role === 'student').map(user => user.username)
+    }
+  } catch (error) {
+    props.toastRef.show({
+      message: "Es ist ein Fehler aufgetreten.",
+      color: "red"
+    })
+  }
+}
+
 </script>
 
 <template>
@@ -154,7 +170,7 @@ async function editGroup() {
         </v-card>
         <v-card title="Mitglieder">
           <template v-slot:append>
-            <v-btn flat icon><v-icon icon="mdi-account-plus" @click="() => {showAddUser=true; newUser = ''}"></v-icon></v-btn>
+            <v-btn flat icon><v-icon icon="mdi-account-plus" @click="() => {getUsers(); showAddUser=true; newUser = ''}"></v-icon></v-btn>
           </template>
           <v-card-text>
             <v-list density="compact" nav>
@@ -175,7 +191,12 @@ async function editGroup() {
     <v-dialog width="500px" v-model="showAddUser">
       <v-card prepend-icon="mdi-account-plus" title="Einen Schüler der Gruppe hinzufügen">
         <v-card-text>
-          <v-text-field label="Benutzername" v-model="newUser"></v-text-field>
+          <v-autocomplete
+            label="Benutzername"
+            v-model="newUser"
+            :items="users"
+            hideDetails
+          ></v-autocomplete>
         </v-card-text>
         <v-card-actions>
           <v-btn color="primary" @click="addUser">Hinzufügen</v-btn>
