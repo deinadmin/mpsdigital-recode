@@ -13,14 +13,21 @@ import {useRouter} from "vue-router";
 const loaded = ref(false)
 const loggedIn = ref(false)
 const user = ref(null)
-
+const userSettings = ref({})
 onMounted(async () => {
   await getUserInfo()
   console.log(user.value)
+  await fetchUserSettings()
 })
 const router = useRouter()
 
+async function fetchUserSettings() {
+  const response = await axios.get(ip + "account/settings", {withCredentials: true})
+  userSettings.value = response.data
+}
+
 async function logOut() {
+  userSettings.value = {}
   router.push("/")
   try {
     await axios.get(ip + "logout", {withCredentials: true})
@@ -62,7 +69,7 @@ const smallMenu = ref(false)
   <v-app>
     <ToastComponent ref="toastComponentRef" />
     <v-layout style="height: 100%">
-      <v-app-bar color="primary" density="compact" title="mPSdigital" fixed>
+      <v-app-bar color="primary" density="compact" :title="userSettings.nickname ? ('Hey, ' + userSettings.nickname + '!') : 'mPSdigital'" fixed>
         <template v-slot:prepend>
           <v-app-bar-nav-icon v-if="loggedIn" @click="smallMenu = !smallMenu"></v-app-bar-nav-icon>
         </template>

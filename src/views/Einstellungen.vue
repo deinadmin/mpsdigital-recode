@@ -10,6 +10,38 @@ const newPasswordRepeat = ref("")
 const showOldPassword = ref(false)
 const showNewPassword = ref(false)
 const showNewPasswordRepeat = ref(false)
+const userSettings = ref({})
+
+onMounted(() => {
+  fetchUserSettings()
+})
+
+async function fetchUserSettings() {
+  const response = await axios.get(props.ip + "account/settings", {withCredentials: true})
+  userSettings.value = response.data
+  if (Object.keys(userSettings.value).length === 0) {
+    userSettings.value = {
+      nickname: ""
+    }
+    await saveUserSettings()
+  }
+  
+}
+
+async function saveUserSettings() {
+  const response = await axios.put(props.ip + "account/settings", userSettings.value, {withCredentials: true})
+  if (response.status === 200) {
+    props.toastRef.show({
+      message: "Die Einstellungen wurden gespeichert.",
+      color: "info"
+    })
+  } else {
+    props.toastRef.show({
+      message: "Es ist ein Fehler aufgetreten.",
+      color: "red"
+    })
+  }
+}
 
 async function changePassword() {
   if (oldPassword.value === "" || newPassword.value === "" || newPasswordRepeat.value === "") {
@@ -115,8 +147,11 @@ async function createExcursion() {
       </v-card>
       <v-card title="Benutzerspezifisches">
         <v-card-text>
-          <v-text-field disabled label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
+          <v-text-field v-model="userSettings.nickname" label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
         </v-card-text>
+        <v-card-actions>
+          <v-btn @click="saveUserSettings" color="primary">Speichern</v-btn>
+        </v-card-actions>
       </v-card>
       <v-card title="Entwickleroptionen">
         <v-card-text>

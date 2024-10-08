@@ -69,15 +69,17 @@ async function login() {
 </script>
 
 <template>
-  <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
+  <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
     <v-card :loading="loading" width="400">
       <v-card-title><b>Willkommen bei mPSdigital!</b></v-card-title>
+      <v-card-subtitle>Die Digitalisierung der mPS. Bitte logge dich ein:</v-card-subtitle>
       <v-card-text>
         <v-text-field suffix="@mps-ki.de" :disabled="loading" style="margin-bottom: 5px" hint="Dein IServ-Benutzername (z. B. max.mustermann)" variant="solo" single-line density="comfortable" label="Benutzername" v-model="username"></v-text-field>
         <v-text-field :disabled="loading" variant="solo" single-line density="comfortable" label="Passwort" v-model="password" outlined type="password"></v-text-field>
         <v-btn color="primary" variant="elevated" @click="login" :disabled="loading">Login</v-btn>
       </v-card-text>
     </v-card>
+    <p style="margin-top: 10px">Made with ❤️ by Q2 Informatikprofil</p>
   </div>
 </template>
 

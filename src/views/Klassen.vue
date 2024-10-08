@@ -68,6 +68,10 @@ async function addForm() {
   }
 }
 
+function handleRowClick(event, item) {
+  router.push(`/klassen/${item.item.name}`)
+}
+
 const search = ref("")
 </script>
 
@@ -87,6 +91,7 @@ const search = ref("")
         :no-data-text="forms.length === 0 ? 'Es wurden noch keine Klassen erstellt.' : 'Keine Ergebnisse gefunden.'"
         items-per-page-text="Klassen pro Seite:"
         page-text="Klassen {0} bis {1} von insg. {2}"
+        @click:row="handleRowClick"
     ></v-data-table>
     <v-fab class="floating-btn" color="primary" icon="mdi-plus" @click="openDialog"></v-fab>
     <v-dialog width="500px" v-model="showAddForm">
