@@ -60,7 +60,7 @@ const search = ref("")
 <template>
   <MeineAnträge :ip="props.ip" :toastRef="props.toastRef" :user="props.user" v-if="props.user.role === 'student'" />
   <div v-else>
-    <div style="display: flex; flex-direction: row; align-items: center; justify-content: left;">
+    <div class="search-bar-container">
       <h1 class="main">Anträge</h1>
       <v-text-field style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
     </div>
@@ -97,7 +97,7 @@ const search = ref("")
           <v-icon icon="mdi-check-bold"></v-icon>
           <v-tooltip activator="parent" location="bottom">Antrag annehmen</v-tooltip>
         </v-btn>
-        <v-btn @click="(event) => setStatus(event, item.id, 'pending')" :disabled="item.status === 'pending'" size="small" flat style="margin-right: 6px" icon color="orange">
+        <v-btn @click="(event) => setStatus(event, item.id, 'pending')" size="small" flat :disabled="item.status === 'pending'" :style="'margin-right: 6px; ' + (item.status === 'pending' ? 'opacity: 0.5' : '')" icon color="orange">
           <v-icon color="white" icon="mdi-minus-thick"></v-icon>
           <v-tooltip activator="parent" location="bottom">Status zurücksetzen</v-tooltip>
         </v-btn>

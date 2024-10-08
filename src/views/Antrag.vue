@@ -42,8 +42,15 @@ async function fetchExcursion() {
 </script>
 
 <template>
-  <div class="main">
-    <h1>Antrag</h1>
+  <div v-if="excursion === null" class="flex-center">
+    <v-progress-circular
+      indeterminate
+      size="40"
+      color="black"
+    ></v-progress-circular>
+  </div>
+  <div v-else class="main">
+    <h1>Antrag #{{ excursion.id }}</h1>
   </div>
 </template>
 

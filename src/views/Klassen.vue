@@ -67,42 +67,26 @@ async function addForm() {
     console.log(error)
   }
 }
+
+const search = ref("")
 </script>
 
 <template>
   <div>
-    <h1 class="main">Klassen</h1>
-    <v-table
-        fixed-header
-        :rail="true"
-        :hover="forms.length > 0"
-        density="comfortable"
-    >
-      <thead>
-      <tr>
-        <th class="text-left">
-          <b>Klassenname</b>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr
-          v-if="forms.length !== 0"
-          v-for="form in forms"
-          :key="form.name"
-          style="cursor: pointer"
-          @click="router.push('/klassen/' + form.name)"
-      >
-        <td>{{ form.name }}</td>
-      </tr>
-      <tr v-else>
-        <td style="display: flex; flex-direction: column; padding: 20px; height: 100px; align-items: center; justify-content: center">
-          <p>Es wurden noch keine Klassen erstellt.</p>
-          <v-btn style="margin-top: 10px" color="primary" @click="openDialog">Klasse erstellen</v-btn>
-        </td>
-      </tr>
-      </tbody>
-    </v-table>
+    <div class="search-bar-container">
+      <h1 class="main">Klassen</h1>
+      <v-text-field style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
+    </div>
+    <v-data-table
+        :search="search"
+        :headers="[
+        { title: 'Klassenname', value: 'name' },
+      ]"
+        :items="forms"
+        :no-data-text="forms.length === 0 ? 'Es wurden noch keine Klassen erstellt.' : 'Keine Ergebnisse gefunden.'"
+        items-per-page-text="Klassen pro Seite:"
+        page-text="Klassen {0} bis {1} von insg. {2}"
+    ></v-data-table>
     <v-fab class="floating-btn" color="primary" icon="mdi-plus" @click="openDialog"></v-fab>
     <v-dialog width="500px" v-model="showAddForm">
       <v-card

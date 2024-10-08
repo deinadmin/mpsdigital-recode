@@ -41,7 +41,7 @@ const search = ref("")
 
 <template>
   <div>
-    <div style="display: flex; flex-direction: row; align-items: center; justify-content: left;">
+    <div class="search-bar-container">
       <h1 class="main">Gruppen</h1>
       <v-text-field style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
     </div>

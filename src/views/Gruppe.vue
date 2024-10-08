@@ -32,6 +32,7 @@ async function fetchGroup() {
       if(group.value.endDate) {
         endDate.value = new Date(group.value.endDate)
       }
+      console.log(group.value)
     }
   } catch (error) {
     props.toastRef.show({

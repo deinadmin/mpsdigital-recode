@@ -61,12 +61,16 @@ async function editUser() {
     try {
       const response = await axios.patch(props.ip + "user/" + props.username, {
         username: user.value.username,
+        role: user.value.role,
+        generalParentalConsent: user.value.generalParentalConsent,
+        specialParentalConsent: user.value.specialParentalConsent
       }, {withCredentials: true})
       if (response.status === 200) {
         props.toastRef.show({
           message: "Die Änderungen wurden gespeichert.",
           color: "info"
         })
+        
       } else {
         props.toastRef.show({
           message: "Es ist ein Fehler aufgetreten.",
@@ -93,6 +97,7 @@ async function editUser() {
   <div v-if="user !== null">
     <v-card :title="'Benutzereinstellungen'">
       <template v-slot:append>
+        <v-alert type="info" style="margin-right: 10px;" density="compact" v-if="editing">Denke daran, die Änderungen zu speichern.</v-alert>
         <v-btn icon flat @click="editUser"><v-icon>{{ editing ? 'mdi-check' : 'mdi-pencil' }}</v-icon></v-btn>
       </template>
       <v-card-text>

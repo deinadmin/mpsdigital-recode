@@ -28,3 +28,12 @@
   right: 60px;
   bottom: 35px
 }
+
+.search-bar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 15px;
+}
+

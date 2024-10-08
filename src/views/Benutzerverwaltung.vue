@@ -117,6 +117,8 @@ const currentUsername = ref("")
 const showUserDialog = ref(false)
 
 function openUserDialog(event, item) {
+  currentUsername.value = item.item.username
+    showUserDialog.value = true
   if (item.item.role === 'student') {
     currentUsername.value = item.item.username
     showUserDialog.value = true
@@ -133,7 +135,7 @@ const search = ref("")
 
 <template>
   <div>
-    <div style="display: flex; flex-direction: row; align-items: center; justify-content: left;">
+    <div class="search-bar-container">
       <h1 class="main">Benutzerverwaltung</h1>
       <v-text-field style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
     </div>
@@ -187,7 +189,7 @@ const search = ref("")
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog width="600px" v-model="showUserDialog">
+    <v-dialog width="700px" v-model="showUserDialog">
       <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" />
     </v-dialog>
   </div>
