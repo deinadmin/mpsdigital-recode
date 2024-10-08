@@ -10,6 +10,8 @@ onMounted(async () => {
 })
 
 const group = ref(null)
+const startDate = ref(null)
+const endDate = ref(null)
 
 async function fetchGroup() {
   const groupId = props.user.group
@@ -19,7 +21,8 @@ async function fetchGroup() {
 
     if (response.status === 200) {
       group.value = response.data
-      console.log(group.value)
+      startDate.value = new Date(group.value.startDate).toLocaleDateString()
+      endDate.value = group.value.endDate ? new Date(group.value.endDate).toLocaleDateString() : null
     } else {
       props.toastRef.show({
         message: "Es ist ein Fehler aufgetreten.",
@@ -42,10 +45,10 @@ async function fetchGroup() {
     <div class="two-grid" v-if="group !== null">
       <v-card title="Informationen">
         <v-card-text>
-          <p><b>Name:</b> {{ group.name }}</p>
-          <p><b>Projektart:</b> {{ group.type }}</p>
-          <p><b>Startdatum:</b> {{ new Date(group.startDate).toLocaleDateString() }}</p>
-          <p><b>Enddatum:</b> {{ group.endDate === null ? "Noch offen" : new Date(group.endDate).toLocaleDateString() }}</p>
+          <v-text-field v-model="group.name" label="Name" readonly></v-text-field>
+          <v-text-field v-model="group.type" label="Projektart" readonly></v-text-field>
+          <v-text-field v-model="startDate" label="Startdatum" readonly></v-text-field>
+          <v-text-field v-model="group.endDate" label="Enddatum" placeholder="Noch offen" readonly></v-text-field>
         </v-card-text>
       </v-card>
       <v-card title="Mitglieder">
