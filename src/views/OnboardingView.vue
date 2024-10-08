@@ -118,6 +118,16 @@ async function updatePassword() {
     return
   }
 
+  // Überprüfe, ob das Passwort sicher ist
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+  if (!passwordRegex.test(newPassword.value)) {
+    props.toastRef.show({
+      message: "Das Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.",
+      color: "red"
+    });
+    return;
+  }
+
   try {
     const response = await axios.post(props.ip + "account/changePassword", {
       old: props.user.username,
@@ -175,7 +185,7 @@ function reloadPage() {
         </v-card-text>
       </v-card>
       <v-card :elevation="step !== 2 ? 0 : 2" :disabled="step !== 2">
-        <v-card-text>
+        <v-card-text v-if="user.role === 'student'">
               <h2><v-chip :color="step > 2 ? 'success' : 'info'">Schritt 2</v-chip> Gruppe beitreten/erstellen</h2>
               <p style="margin-top: 10px">Möchtest du eine neue Gruppe erstellen oder einer bereits vorhandenen Gruppe beitreten?</p>
               <v-tabs v-model="currentTab" fixed-tabs grow>
@@ -207,6 +217,11 @@ function reloadPage() {
                   <v-btn color="info" @click="createGroup">Gruppe Erstellen</v-btn>
                 </v-tabs-window-item>
               </v-tabs-window>
+        </v-card-text>
+        <v-card-text v-else>
+          <h2><v-chip color="info">Schritt 2</v-chip> Und fertig!</h2>
+          <p style="margin: 20px 0">Du kannst jetzt loslegen!</p>
+          <v-btn color="info" @click="reloadPage">Jetzt starten!</v-btn>
         </v-card-text>
       </v-card>
     </div>
