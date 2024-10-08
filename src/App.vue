@@ -122,7 +122,7 @@ const smallMenu = ref(false)
                 <v-list-item to="/einstellungen" value="settings" link title="Einstellungen" block prepend-icon="mdi-cog"></v-list-item>
               </v-list>
             </div>
-              <v-btn style="margin-bottom: 10px; margin-left: 10px" v-else @click="toastComponentRef.show({ message: 'Hier findest du mehr Infos!'})" variant="elevated" color="primary" append-icon="mdi-open-in-new">Hilfe</v-btn>
+              <v-btn style="margin-bottom: 10px; margin-left: 10px" v-else @click="toastComponentRef.show({ message: 'Hier findest du mehr Infos!'})" flat color="primary" append-icon="mdi-open-in-new">Hilfe</v-btn>
           </div>
         </template>
       </v-navigation-drawer>
