@@ -5,10 +5,32 @@ import {ref, defineProps, watch, onMounted} from 'vue'
 import axios from "axios";
 
 const user = ref(null)
+const editing = ref(false)
 
 onMounted(async () => {
   await getUserInfo()
 })
+
+async function resetPassword() {
+  
+  try {
+    const response = await axios.post(props.ip + "user/" + props.username + "/passwordReset", {}, {withCredentials: true})
+    if (response.status === 200) {
+      props.toastRef.show({
+        message: "Das Passwort wurde zurückgesetzt.",
+        color: "info"
+      })
+    }
+  } catch (error) {
+    console.log(error)
+    props.toastRef.show({
+      message: "Es ist ein Fehler aufgetreten.",
+      color: "red"
+    })
+  }
+}
+
+
 
 async function getUserInfo() {
 
@@ -18,6 +40,11 @@ async function getUserInfo() {
     if (response.status === 200) {
       user.value = response.data
       console.log(user.value)
+    } else {
+      props.toastRef.show({
+        message: "Es ist ein Fehler aufgetreten.",
+        color: "red"
+      })
     }
 
   } catch (error) {
@@ -29,40 +56,89 @@ async function getUserInfo() {
   }
 }
 
+async function editUser() {
+  if (editing.value) {
+    try {
+      const response = await axios.patch(props.ip + "user/" + props.username, {
+        username: user.value.username,
+      }, {withCredentials: true})
+      if (response.status === 200) {
+        props.toastRef.show({
+          message: "Die Änderungen wurden gespeichert.",
+          color: "info"
+        })
+      } else {
+        props.toastRef.show({
+          message: "Es ist ein Fehler aufgetreten.",
+          color: "red"
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      props.toastRef.show({
+        message: "Es ist ein Fehler aufgetreten.",
+        color: "red"
+      })
+    }
+
+    editing.value = false
+  } else {
+    editing.value = true
+  }
+}
+
 </script>
 
 <template>
   <div v-if="user !== null">
     <v-card :title="'Benutzereinstellungen'">
+      <template v-slot:append>
+        <v-btn icon flat @click="editUser"><v-icon>{{ editing ? 'mdi-check' : 'mdi-pencil' }}</v-icon></v-btn>
+      </template>
       <v-card-text>
           <v-text-field
               v-model="user.username"
               label="Benutzername"
               outlined
-              readonly>
+              :readonly="!editing">
             <template v-slot:append>
-              <v-btn flat color="red">Passwort zurücksetzen</v-btn>
+              <v-btn flat color="red" @click="resetPassword">Passwort zurücksetzen</v-btn>
             </template>
           </v-text-field>
-        <v-text-field
+        <v-select
             v-model="user.role"
             label="Rolle"
             outlined
-            readonly>
-        </v-text-field>
+            :readonly="!editing"
+            :items="['student', 'teacher', 'admin']">
+        </v-select>
         <div v-if="user.role === 'student'">
           <div style="display: flex">
             <v-text-field
-                loading
-                disabled
+                v-if="user.form !== undefined"
+                v-model="user.form"
                 label="Klasse"
                 outlined
                 readonly>
             </v-text-field>
             <v-text-field
-                loading
+                v-else
+                label="Klasse"
                 disabled
+                outlined
+                readonly>
+            </v-text-field>
+            <v-text-field
+                v-if="user.group !== undefined"
+                v-model="user.group.name"
                 label="Gruppe"
+                outlined
+                readonly>
+            </v-text-field>
+            <v-text-field
+                v-else
+                label="Gruppe"
+                disabled
                 outlined
                 readonly>
             </v-text-field>
@@ -70,14 +146,13 @@ async function getUserInfo() {
           <v-switch
               v-model="user.generalParentalConsent"
               label="Allgemeine Einverständniserklärung"
-              readonly
+              :readonly="!editing"
               hide-details
-              style="margin: 0; padding:0"
           ></v-switch>
           <v-switch
               v-model="user.specialParentalConsent"
               label="Erweiterte Einverständniserklärung"
-              readonly
+              :readonly="!editing"
               hide-details
           ></v-switch>
         </div>
