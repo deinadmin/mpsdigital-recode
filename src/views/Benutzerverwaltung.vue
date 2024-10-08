@@ -127,11 +127,16 @@ function openUserDialog(event, item) {
     })
   }
 }
+
+const search = ref("")
 </script>
 
 <template>
   <div>
-    <h1 class="main">Benutzerverwaltung</h1>
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: left;">
+      <h1 class="main">Benutzerverwaltung</h1>
+      <v-text-field style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
+    </div>
     <v-data-table
         hover
         :loading="users.length === 0"
@@ -140,6 +145,7 @@ function openUserDialog(event, item) {
           { title: 'Rolle', value: 'role' },
         ]"
         :items="users"
+        :search="search"
         items-per-page-text="Benutzer pro Seite:"
         page-text="Benutzer {0} bis {1} von insg. {2}"
       @click:row="openUserDialog"

@@ -36,12 +36,17 @@ function handleRowClick(event, item) {
 
 }
 
+const search = ref("")
 </script>
 
 <template>
   <div>
-    <h1 class="main">Gruppen</h1>
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: left;">
+      <h1 class="main">Gruppen</h1>
+      <v-text-field style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
+    </div>
     <v-data-table
+        :search="search"
         :loading="loading"
         loading-text="Lade die Gruppen..."
         no-data-text="Es wurden noch keine Gruppen erstellt."

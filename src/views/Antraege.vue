@@ -53,19 +53,26 @@ function openExcursion(event, item) {
   router.push("/antraege/" + item.item.id)
 }
 
+const search = ref("")
+
 </script>
 
 <template>
   <MeineAnträge :ip="props.ip" :toastRef="props.toastRef" :user="props.user" v-if="props.user.role === 'student'" />
   <div v-else>
-    <h1 class="main">Anträge</h1>
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: left;">
+      <h1 class="main">Anträge</h1>
+      <v-text-field style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
+    </div>
+
     <v-data-table
+        :search="search"
         :headers="[
         { title: 'ID', value: 'id' },
         { title: 'Beschreibung', value: 'description' },
         { title: 'Gruppe', value: 'group.name' },
         { title: 'Datum', value: 'date' },
-        { title: 'Status', value: 'status' },
+        { title: 'Status', value: 'status', sortable: true, filterable: true },
         { title: 'Aktionen', key: 'actions', sortable: false },
       ]"
         :items="excursions"
