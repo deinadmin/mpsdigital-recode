@@ -1,6 +1,11 @@
 <script setup>
 
-const props = defineProps(["username", "ip", "toastRef"])
+const props = defineProps({
+  ip: String,
+  toastRef: Object,
+  username: String,
+  fetchUserInfo: Function  // Neue Prop für die Funktion
+})
 import {ref, defineProps, watch, onMounted} from 'vue'
 import axios from "axios";
 
@@ -70,7 +75,7 @@ async function editUser() {
           message: "Die Änderungen wurden gespeichert.",
           color: "info"
         })
-        
+        await props.fetchUserInfo()
       } else {
         props.toastRef.show({
           message: "Es ist ein Fehler aufgetreten.",

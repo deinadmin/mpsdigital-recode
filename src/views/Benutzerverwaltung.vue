@@ -49,7 +49,7 @@ onMounted(async () => {
   await getForms()
 })
 
-async function getUsers() {
+const getUsers = async () => {
   try {
     const response = await axios.get(props.ip + "user", {withCredentials: true})
 
@@ -190,7 +190,7 @@ const search = ref("")
       </v-card>
     </v-dialog>
     <v-dialog width="700px" v-model="showUserDialog">
-      <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" />
+      <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" :fetchUserInfo="getUsers" />
     </v-dialog>
   </div>
 </template>
