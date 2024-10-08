@@ -105,7 +105,8 @@ async function editGroup() {
         name: group.value.name,
         type: group.value.type,
         startDate: startDate.value,
-        endDate: endDate.value
+        endDate: endDate.value,
+        ...(group.value.onlinePinboard ? { onlinePinboard: group.value.onlinePinboard } : {})
       }, {withCredentials: true})
 
       if(response.status === 200) {

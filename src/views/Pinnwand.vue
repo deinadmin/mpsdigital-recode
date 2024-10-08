@@ -15,7 +15,7 @@ async function fetchPinboardLink() {
     const response = await axios.get(props.ip + "group/" + props.user.group, {withCredentials: true})
 
     if(response.status === 200) {
-      pinboard.value = response.data.pinboard
+      pinboard.value = response.data.onlinePinboard
       console.log(pinboard.value)
     }
   } catch (error) {
