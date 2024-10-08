@@ -3,7 +3,7 @@ import OnboardingView from "@/views/OnboardingView.vue";
 
 const toastComponentRef = ref(null)
 const ip = "http://localhost:3001/api/"
-
+// webhook
 import {onMounted, ref} from 'vue'
 import AuthComponent from "@/components/AuthComponent.vue";
 import axios from 'axios'
