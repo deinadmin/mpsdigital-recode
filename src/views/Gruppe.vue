@@ -19,7 +19,7 @@ const showRemoveConfirmation = ref(false)
 const userToRemove = ref("")
 
 const startDate = ref(new Date())
-const endDate = ref(new Date())
+const endDate = ref(null)
 
 
 async function fetchGroup() {
@@ -28,7 +28,10 @@ async function fetchGroup() {
 
     if(response.status === 200) {
       group.value = response.data
-      startDate.value = new Date(group.value.startDate).toLocaleDateString()
+      startDate.value = new Date(group.value.startDate)
+      if(group.value.endDate) {
+        endDate.value = new Date(group.value.endDate)
+      }
     }
   } catch (error) {
     props.toastRef.show({
@@ -93,6 +96,36 @@ async function removeUser() {
   }
 }
 
+const editing = ref(false)
+
+async function editGroup() {
+  if(editing.value) {
+    try {
+      const response = await axios.patch(props.ip + "group/" + route.params.id, {
+        name: group.value.name,
+        type: group.value.type,
+        startDate: startDate.value,
+        endDate: endDate.value
+      }, {withCredentials: true})
+
+      if(response.status === 200) {
+        props.toastRef.show({
+          message: "Die Gruppe wurde bearbeitet.",
+          color: "info"
+        })
+        editing.value = false
+      }
+    } catch (error) {
+      props.toastRef.show({
+        message: "Es ist ein Fehler aufgetreten.",
+        color: "red"
+      })
+    }
+  } else {
+    editing.value = true
+  }
+}
+
 </script>
 
 <template>
@@ -102,16 +135,19 @@ async function removeUser() {
       <div class="two-grid">
         <v-card title="Informationen">
           <template v-slot:append>
-            <v-btn flat icon><v-icon icon="mdi-pencil"></v-icon></v-btn>
+            <v-alert v-if="editing" density="compact" type="info" style="margin-right: 10px">Nicht vergessen, die Änderungen zu speichern!</v-alert>
+            <v-btn flat icon @click="editGroup"><v-icon :color="editing ? 'success' : ''" :icon="editing ? 'mdi-check' : 'mdi-pencil'"></v-icon></v-btn>
           </template>
           <v-card-text>
-            <v-text-field label="Name" v-model="group.name" readonly></v-text-field>
-            <v-text-field label="Projektart" v-model="group.type" readonly></v-text-field>
+            <v-text-field label="Name" v-model="group.name" :readonly="!editing"></v-text-field>
+            <v-select label="Projektart" v-model="group.type" :items="['mPS', 'Herausforderung']" :readonly="!editing"></v-select>
             <h3>Zeitraum</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px; margin-top: 10px">
-              <v-text-field label="Startdatum" v-model="startDate" readonly></v-text-field>
-              <v-text-field label="Enddatum" v-model="group.endDate" readonly></v-text-field>
+              <v-date-input label="Startdatum" v-model="startDate" :readonly="!editing"></v-date-input>
+              <v-date-input label="Enddatum" v-model="endDate" placeholder="Noch nicht festgelegt" :readonly="!editing"></v-date-input>
             </div>
+            <h3>Pinnwand</h3>
+            <v-text-field v-model="group.onlinePinboard" prepend-icon="mdi-pin" style="margin-top: 10px" label="Pinnwand" placeholder="Noch keine Pinnwand erstellt" :readonly="!editing"></v-text-field>
           </v-card-text>
         </v-card>
         <v-card title="Mitglieder">
