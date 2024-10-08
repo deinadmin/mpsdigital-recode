@@ -61,7 +61,7 @@ async function createExcursion() {
     const response = await axios.post(props.ip + "excursion", {
       description: "Testtt",
       date: new Date("2024-"+ Math.floor(Math.random() * 12 + 1) + "-" + Math.floor(Math.random() * 28 + 1)),
-      group: 2
+      group: 1
     }, {withCredentials: true})
 
     if(response.status === 201) {

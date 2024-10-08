@@ -13,11 +13,13 @@ onMounted(async () => {
 
 const excursions = ref([])
 async function fetchExcursions() {
+  loading.value = true
   try {
     const response = await axios.get(props.ip + "excursion", {withCredentials: true})
 
     if(response.status === 200) {
       excursions.value = response.data
+      loading.value = false
       console.log(excursions.value)
     }
   } catch (error) {
@@ -28,9 +30,10 @@ async function fetchExcursions() {
   }
 }
 
-async function setStatus(event,id, status) {
+async function setStatus(event, id, status) {
   event.stopPropagation()
   try {
+    loading.value = true
     const response = await axios.patch(props.ip + "excursion/" + id, {status: status}, {withCredentials: true})
     if(response.status === 200) {
       props.toastRef.show({
@@ -39,6 +42,7 @@ async function setStatus(event,id, status) {
       })
       await fetchExcursions()
     }
+    loading.value = false
   } catch (error) {
     props.toastRef.show({
       message: "Es ist ein Fehler aufgetreten.",
@@ -54,6 +58,7 @@ function openExcursion(event, item) {
 }
 
 const search = ref("")
+const loading = ref(false)
 
 </script>
 
@@ -76,7 +81,7 @@ const search = ref("")
         { title: 'Aktionen', key: 'actions', sortable: false },
       ]"
         :items="excursions"
-        :loading="excursions.length === 0"
+        :loading="loading"
         loading-text="Lade die Anträge..."
         :no-data-text="excursions.length === 0 ? 'Es wurden noch keine Anträge gestellt.' : 'Keine Ergebnisse gefunden.'"
         items-per-page="20"

@@ -49,7 +49,7 @@ const search = ref("")
         :search="search"
         :loading="loading"
         loading-text="Lade die Gruppen..."
-        no-data-text="Es wurden noch keine Gruppen erstellt."
+        :no-data-text="groups.length === 0 ? 'Es wurden noch keine Gruppen erstellt.' : 'Keine Ergebnisse gefunden.'"
         items-per-page="20"
       :headers="[
           { title: 'ID', key: 'id' },

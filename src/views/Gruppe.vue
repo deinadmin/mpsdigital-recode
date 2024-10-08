@@ -5,7 +5,7 @@ import {useRoute} from "vue-router";
 const props = defineProps(["ip", "toastRef", "user"])
 import {onMounted, ref, defineProps} from 'vue'
 import axios from 'axios'
-
+import BenutzerComponent from '@/components/BenutzerComponent.vue'
 
 const route = useRoute()
 

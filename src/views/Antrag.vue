@@ -3,6 +3,7 @@ import { ref, defineProps, onMounted } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 const route = useRoute()
+import BenutzerComponent from '@/components/BenutzerComponent.vue'
 
 const props = defineProps({
   ip: String,
@@ -44,6 +45,13 @@ async function fetchExcursion() {
   }
 }
 
+const showUserDialog = ref(false)
+const currentUsername = ref(null)
+
+function openUserDialog(username) {
+  currentUsername.value = username
+  showUserDialog.value = true
+}
 
 </script>
 
@@ -74,9 +82,9 @@ async function fetchExcursion() {
             </template>
             <v-card-text v-if="group !== null">
                 <v-list>
-                    <v-list-item prepend-icon="mdi-account" v-for="member in group.members" :key="member.id">
+                    <v-list-item link @click="openUserDialog(member.username)" prepend-icon="mdi-account" v-for="member in group.members" :key="member.id">
                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
-                            <span>{{ member.user.username }}</span>
+                            <span>{{ member.username }}</span>
                             <v-chip :color="member.generalParentalConsent ? 'green' : 'red'">{{ member.generalParentalConsent ? 'Einverständniserklärung vorhanden' : 'Keine Einverständniserklärung vorhanden' }}</v-chip>
                         </div>
                     </v-list-item>
@@ -85,6 +93,9 @@ async function fetchExcursion() {
         </v-card>
     </div>
   </div>
+  <v-dialog width="700px" v-model="showUserDialog">
+    <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" :fetchUserInfo="fetchExcursion" />
+  </v-dialog>
 </template>
 
 <style scoped>
