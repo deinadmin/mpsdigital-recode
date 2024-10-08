@@ -65,7 +65,7 @@ async function fetchExcursion() {
                 <h3>Datum</h3>
                 <v-text-field :value="new Date(excursion.date).toLocaleDateString()" readonly></v-text-field>
                 <h3>Status</h3>
-                <v-chip :color="excursion.status === 'pending' ? 'yellow' : (excursion.status === 'accepted' ? 'green' : 'red')">{{ excursion.status === 'pending' ? 'Ausstehend' : (excursion.status === 'accepted' ? 'Angenommen' : 'Abgelehnt') }}</v-chip>
+                <v-chip :color="excursion.status === 'pending' ? 'orange' : (excursion.status === 'accepted' ? 'green' : 'red')">{{ excursion.status === 'pending' ? 'Ausstehend' : (excursion.status === 'accepted' ? 'Angenommen' : 'Abgelehnt') }}</v-chip>
             </v-card-text>
         </v-card>
         <v-card title="Gruppenmitglieder" :loading="group === null">
