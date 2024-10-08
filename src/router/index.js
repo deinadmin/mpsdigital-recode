@@ -54,6 +54,11 @@ const router = createRouter({
       name: 'antraege',
       component: () => import('../views/Antraege.vue')
     },
+    {
+      path: '/antraege/:id',
+      name: 'antrag',
+      component: () => import('../views/Antrag.vue')
+    },
   ]
 })
 
