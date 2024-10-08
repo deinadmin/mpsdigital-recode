@@ -56,6 +56,29 @@ async function changePassword() {
   }
 }
 
+async function createExcursion() {
+  try {
+    const response = await axios.post(props.ip + "excursion", {
+      description: "Testtt",
+      date: new Date("2024-"+ Math.floor(Math.random() * 12 + 1) + "-" + Math.floor(Math.random() * 28 + 1)),
+      group: 2
+    }, {withCredentials: true})
+
+    if(response.status === 201) {
+      props.toastRef.show({
+        message: "Der Antrag wurde erstellt.",
+        color: "info"
+      })
+    }
+  } catch (error) {
+    props.toastRef.show({
+      message: "Es ist ein Fehler aufgetreten.",
+      color: "red"
+    })
+    console.log(error)
+  }
+}
+
 </script>
 
 <template>
@@ -93,6 +116,11 @@ async function changePassword() {
       <v-card title="Benutzerspezifisches">
         <v-card-text>
           <v-text-field disabled label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
+        </v-card-text>
+      </v-card>
+      <v-card title="Entwickleroptionen">
+        <v-card-text>
+          <v-btn @click="createExcursion" color="info" prepend-icon="mdi-creation">AI-Antrag stellen</v-btn>
         </v-card-text>
       </v-card>
     </div>

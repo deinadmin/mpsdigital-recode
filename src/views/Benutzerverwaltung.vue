@@ -118,16 +118,7 @@ const showUserDialog = ref(false)
 
 function openUserDialog(event, item) {
   currentUsername.value = item.item.username
-    showUserDialog.value = true
-  if (item.item.role === 'student') {
-    currentUsername.value = item.item.username
-    showUserDialog.value = true
-  } else {
-    props.toastRef.show({
-      message: "Dieser Benutzer ist kein Schüler und kann deshalb noch nicht bearbeitet werden.",
-      color: "info"
-    })
-  }
+  showUserDialog.value = true
 }
 
 const search = ref("")

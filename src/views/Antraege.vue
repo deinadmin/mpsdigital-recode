@@ -71,7 +71,7 @@ const search = ref("")
         { title: 'ID', value: 'id' },
         { title: 'Beschreibung', value: 'description' },
         { title: 'Gruppe', value: 'group.name' },
-        { title: 'Datum', value: 'date' },
+        { title: 'Datum', value: 'date', sortable: true },
         { title: 'Status', value: 'status', sortable: true, filterable: true },
         { title: 'Aktionen', key: 'actions', sortable: false },
       ]"

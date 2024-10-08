@@ -175,7 +175,7 @@ async function getUsers() {
           <v-card-text>
             <v-list density="compact" nav>
               <v-list-item prepend-icon="mdi-account" v-for="student in group.members">
-                {{ student }}
+                {{ student.user.username }}
                 <template v-slot:append>
                   <v-btn @click="() => {showRemoveConfirmation = true; userToRemove = student }" flat icon><v-icon color="red" icon="mdi-close-circle"></v-icon></v-btn>
                 </template>
