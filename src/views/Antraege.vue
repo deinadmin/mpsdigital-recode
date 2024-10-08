@@ -66,7 +66,7 @@ const loading = ref(false)
   <MeineAnträge :ip="props.ip" :toastRef="props.toastRef" :user="props.user" v-if="props.user.role === 'student'" />
   <div v-else>
     <div class="search-bar-container">
-      <h1 class="main">Anträge</h1>
+      <h1 class="main">Anträge für Exkursionen</h1>
       <v-text-field style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
     </div>
 

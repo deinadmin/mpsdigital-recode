@@ -73,7 +73,7 @@ async function addExcursion() {
 
 <template>
   <div>
-    <h1 class="main">Meine Anträge</h1>
+    <h1 class="main">Meine Anträge für Exkursionen</h1>
     <v-tooltip text="Einen Antrag stellen">
       <template v-slot:activator="{ props }">
         <v-fab v-bind="props" class="floating-btn" color="primary" icon="mdi-plus" @click="openDialog"></v-fab>
