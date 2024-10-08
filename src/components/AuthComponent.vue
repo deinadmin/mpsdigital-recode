@@ -1,7 +1,9 @@
 <script setup>
 
 import { ref, defineProps, watch } from 'vue'
+import { useRouter } from 'vue-router'
 const props = defineProps(["getUserInfo", "ip", "toastRef"])
+const router = useRouter()
 
 
 import { useMagicKeys } from '@vueuse/core'
@@ -42,6 +44,7 @@ async function login() {
       await props.getUserInfo()
       username.value = ""
       password.value = ""
+      router.push("/")
     } else {
       props.toastRef.show({
         message: "Die Kombination aus Benutzername und Passwort existiert nicht.",
