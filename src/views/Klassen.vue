@@ -82,6 +82,7 @@ const search = ref("")
         :headers="[
         { title: 'Klassenname', value: 'name' },
       ]"
+      items-per-page="20"
         :items="forms"
         :no-data-text="forms.length === 0 ? 'Es wurden noch keine Klassen erstellt.' : 'Keine Ergebnisse gefunden.'"
         items-per-page-text="Klassen pro Seite:"

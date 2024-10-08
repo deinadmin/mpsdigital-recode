@@ -50,6 +50,7 @@ const search = ref("")
         :loading="loading"
         loading-text="Lade die Gruppen..."
         no-data-text="Es wurden noch keine Gruppen erstellt."
+        items-per-page="20"
       :headers="[
           { title: 'ID', key: 'id' },
         { title: 'Name', key: 'name' },

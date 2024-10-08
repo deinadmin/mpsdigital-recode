@@ -76,7 +76,10 @@ const search = ref("")
         { title: 'Aktionen', key: 'actions', sortable: false },
       ]"
         :items="excursions"
+        :loading="excursions.length === 0"
+        loading-text="Lade die Anträge..."
         :no-data-text="excursions.length === 0 ? 'Es wurden noch keine Anträge gestellt.' : 'Keine Ergebnisse gefunden.'"
+        items-per-page="20"
         items-per-page-text="Anträge pro Seite:"
         page-text="Anträge {0} bis {1} von insg. {2}"
         @click:row="openExcursion"

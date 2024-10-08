@@ -16,7 +16,10 @@ async function fetchPinboardLink() {
 
     if(response.status === 200) {
       pinboard.value = response.data.onlinePinboard
-      console.log(pinboard.value)
+      props.toastRef.show({
+        message: "Die Pinnwand wird geladen...",
+        color: "info"
+      })
     }
   } catch (error) {
     props.toastRef.show({

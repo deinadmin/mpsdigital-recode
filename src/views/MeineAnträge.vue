@@ -104,6 +104,7 @@ async function addExcursion() {
         { title: 'Datum', value: 'date' },
         { title: 'Status', value: 'status' }
       ]"
+      items-per-page="20"
       :items="excursions"
       :no-data-text="excursions.length === 0 ? 'Es wurden noch keine Anträge gestellt.' : 'Keine Ergebnisse gefunden.'"
       items-per-page-text="Anträge pro Seite:"

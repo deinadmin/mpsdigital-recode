@@ -139,6 +139,7 @@ const search = ref("")
         ]"
         :items="users"
         :search="search"
+        items-per-page="20"
         items-per-page-text="Benutzer pro Seite:"
         page-text="Benutzer {0} bis {1} von insg. {2}"
       @click:row="openUserDialog"
