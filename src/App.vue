@@ -90,7 +90,6 @@ const smallMenu = ref(false)
               <v-list-item link to="/antraege" prepend-icon="mdi-note-alert" title="Anträge" value="antraege"></v-list-item>
             </div>
             <div v-else>
-              <v-list-item link to="/" prepend-icon="mdi-view-dashboard" title="Startseite" value="home"></v-list-item>
               <v-list-item link to="/gruppe" prepend-icon="mdi-account-multiple" title="Meine Gruppe" value="gruppe"></v-list-item>
               <v-list-item link to="/antraege" prepend-icon="mdi-note-alert" title="Meine Anträge" value="antraege"></v-list-item>
               <v-list-item link to="/pinnwand" prepend-icon="mdi-pin" title="Meine Pinnwand" value="pinnwand"></v-list-item>

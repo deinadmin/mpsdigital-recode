@@ -160,6 +160,7 @@ async function updatePassword() {
   }
 }
 
+
 function reloadPage() {
   location.reload()
 }
