@@ -26,6 +26,7 @@ async function fetchUserSettings() {
 }
 
 async function logOut() {
+  smallMenu.value = false
   userSettings.value = {}
   router.push("/")
   try {
