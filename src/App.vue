@@ -17,7 +17,6 @@ const userSettings = ref({})
 onMounted(async () => {
   await getUserInfo()
   console.log(user.value)
-  await fetchUserSettings()
 })
 const router = useRouter()
 
@@ -39,7 +38,6 @@ async function logOut() {
 }
 
 async function getUserInfo() {
-
   try {
     const response = await axios.get("http://localhost:3001/api/account/", {withCredentials: true});
 
@@ -48,6 +46,7 @@ async function getUserInfo() {
       user.value = response.data
       console.log(user.value)
       loaded.value=true
+      await fetchUserSettings()
 
     }
 
