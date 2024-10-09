@@ -49,7 +49,7 @@ async function fetchGroup() {
           <v-text-field v-model="group.name" label="Name" readonly></v-text-field>
           <v-text-field v-model="group.type" label="Projektart" readonly></v-text-field>
           <v-text-field v-model="startDate" label="Startdatum" readonly></v-text-field>
-          <v-text-field v-model="group.endDate" label="Enddatum" placeholder="Noch offen" readonly></v-text-field>
+          <v-text-field v-model="endDate" label="Enddatum" placeholder="Noch offen" readonly></v-text-field>
         </v-card-text>
       </v-card>
       <v-card title="Mitglieder">
