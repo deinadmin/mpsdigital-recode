@@ -78,14 +78,14 @@ function openUserDialog(username) {
         </v-card>
         <v-card title="Gruppenmitglieder" :loading="group === null">
             <template v-if="group !== null" v-slot:append>
-                <v-chip :color="group.members.filter(member => member.generalParentalConsent).length === group.members.length ? 'green' : 'orange'">{{ group.members.filter(member => member.generalParentalConsent).length }} von {{ group.members.length }} Einverständniserklärungen</v-chip>
+                <v-chip :color="group.members.filter(member => member.generalParentalconsent).length === group.members.length ? 'green' : 'orange'">{{ group.members.filter(member => member.generalParentalconsent).length }} von {{ group.members.length }} Einverständniserklärungen</v-chip>
             </template>
             <v-card-text v-if="group !== null">
                 <v-list>
                     <v-list-item link @click="openUserDialog(member.username)" prepend-icon="mdi-account" v-for="member in group.members" :key="member.id">
                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
                             <span>{{ member.username }}</span>
-                            <v-chip :color="member.generalParentalConsent ? 'green' : 'red'">{{ member.generalParentalConsent ? 'Einverständniserklärung vorhanden' : 'Keine Einverständniserklärung vorhanden' }}</v-chip>
+                            <v-chip :color="member.generalParentalconsent ? 'green' : 'red'">{{ member.generalParentalconsent ? 'Einverständniserklärung vorhanden' : 'Keine Einverständniserklärung vorhanden' }}</v-chip>
                         </div>
                     </v-list-item>
                 </v-list>
