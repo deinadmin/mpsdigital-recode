@@ -69,7 +69,7 @@ const smallMenu = ref(false)
   <v-app>
     <ToastComponent ref="toastComponentRef" />
     <v-layout style="height: 100%">
-      <v-app-bar color="primary" density="compact" :title="userSettings.nickname ? ('Hey, ' + userSettings.nickname + '!') : 'mPSdigital'" fixed>
+      <v-app-bar color="primary" density="compact" :title="userSettings.nickname ? ('Hey ' + userSettings.nickname + '!') : 'mPSdigital'" fixed>
         <template v-slot:prepend>
           <v-app-bar-nav-icon v-if="loggedIn" @click="smallMenu = !smallMenu"></v-app-bar-nav-icon>
         </template>
