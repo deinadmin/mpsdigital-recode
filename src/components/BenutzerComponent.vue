@@ -11,7 +11,7 @@ import axios from "axios";
 
 const user = ref(null)
 const editing = ref(false)
-
+const username = ref(props.username)
 onMounted(async () => {
   await getUserInfo()
 })
@@ -19,7 +19,7 @@ onMounted(async () => {
 async function resetPassword() {
   
   try {
-    const response = await axios.post(props.ip + "user/" + props.username + "/passwordReset", {}, {withCredentials: true})
+    const response = await axios.post(props.ip + "user/" + user.value.username + "/passwordReset", {}, {withCredentials: true})
     if (response.status === 200) {
       props.toastRef.show({
         message: "Das Passwort wurde zurückgesetzt.",
@@ -64,7 +64,7 @@ async function getUserInfo() {
 async function editUser() {
   if (editing.value) {
     try {
-      const response = await axios.patch(props.ip + "user/" + props.username, {
+      const response = await axios.patch(props.ip + "user/" + username.value, {
         username: user.value.username,
         role: user.value.role,
         generalParentalConsent: user.value.generalParentalConsent,
@@ -76,6 +76,7 @@ async function editUser() {
           color: "info"
         })
         await props.fetchUserInfo()
+        username.value = user.value.username
       } else {
         props.toastRef.show({
           message: "Es ist ein Fehler aufgetreten.",
