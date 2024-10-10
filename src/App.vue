@@ -14,6 +14,7 @@ const loaded = ref(false)
 const loggedIn = ref(false)
 const user = ref(null)
 const userSettings = ref({})
+const dark = ref(false)
 onMounted(async () => {
   await getUserInfo()
   console.log(user.value)
@@ -23,6 +24,9 @@ const router = useRouter()
 async function fetchUserSettings() {
   const response = await axios.get(ip + "account/settings", {withCredentials: true})
   userSettings.value = response.data
+  if (response.data.dark !== undefined) {
+    dark.value = response.data.dark
+  }
 }
 
 async function logOut() {
@@ -66,7 +70,7 @@ const smallMenu = ref(false)
 
 <template>
 
-  <v-app>
+  <v-app :theme="dark ? 'dark' : 'light'">
     <ToastComponent ref="toastComponentRef" />
     <v-layout style="height: 100%">
       <v-app-bar color="primary" density="compact" :title="userSettings.nickname ? ('Hey ' + userSettings.nickname + '!') : 'mPSdigital'" fixed>

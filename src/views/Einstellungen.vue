@@ -11,7 +11,7 @@ const showOldPassword = ref(false)
 const showNewPassword = ref(false)
 const showNewPasswordRepeat = ref(false)
 const userSettings = ref({})
-
+const dark = ref(false)
 onMounted(() => {
   fetchUserSettings()
 })
@@ -21,7 +21,8 @@ async function fetchUserSettings() {
   userSettings.value = response.data
   if (Object.keys(userSettings.value).length === 0) {
     userSettings.value = {
-      nickname: ""
+      nickname: "",
+      dark: false
     }
     await saveUserSettings()
   }
@@ -148,12 +149,14 @@ async function createExcursion() {
       <v-card title="Benutzerspezifisches">
         <v-card-text>
           <v-text-field v-model="userSettings.nickname" label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
+          <v-switch v-model="userSettings.dark" label="Dark Mode"></v-switch>
+          <p>Lade die Seite neu, um die Änderungen zu sehen.</p>
         </v-card-text>
         <v-card-actions>
           <v-btn @click="saveUserSettings" color="primary">Speichern</v-btn>
         </v-card-actions>
       </v-card>
-      <v-card title="Entwickleroptionen">
+      <v-card v-if="props.user.role === 'admin'" title="Entwickleroptionen">
         <v-card-text>
           <v-btn @click="createExcursion" color="info" prepend-icon="mdi-creation">AI-Antrag stellen</v-btn>
         </v-card-text>
