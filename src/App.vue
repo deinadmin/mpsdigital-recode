@@ -2,7 +2,15 @@
 import OnboardingView from "@/views/OnboardingView.vue";
 
 const toastComponentRef = ref(null)
-const ip = "http://localhost:3001/api/"
+import { computed } from 'vue';
+const ip = computed(() => {
+  if (import.meta.env.DEV) {
+    return import.meta.env.VITE_API_BASE_URL
+  } else {
+    return window.location.origin + '/api/'
+  }
+})
+
 // webhook
 import {onMounted, ref} from 'vue'
 import AuthComponent from "@/components/AuthComponent.vue";
