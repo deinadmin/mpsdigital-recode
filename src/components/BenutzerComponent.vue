@@ -75,12 +75,29 @@ async function getUserInfo() {
 async function editUser() {
   if (editing.value) {
     try {
+      // First update the user's basic info
       const response = await axios.patch(props.ip + "user/" + username.value, {
         username: user.value.username,
         role: user.value.role,
         generalParentalConsent: user.value.generalParentalConsent,
-        specialParentalConsent: user.value.specialParentalConsent
       }, {withCredentials: true})
+
+      // If the user is a student and in a group, handle special consent changes
+      if (user.value.role === 'student' && user.value.group) {
+        const oldSpecialConsent = (await getUserInfo()).specialParentalConsent;
+        
+        // Only make API call if the consent status has changed
+        if (oldSpecialConsent !== user.value.specialParentalConsent) {
+          if (user.value.specialParentalConsent) {
+            // Add special consent
+            await axios.put(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {}, {withCredentials: true});
+          } else {
+            // Remove special consent
+            await axios.delete(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {withCredentials: true});
+          }
+        }
+      }
+
       if (response.status === 200) {
         props.toastRef.show({
           message: "Die Änderungen wurden gespeichert.",
@@ -201,7 +218,7 @@ async function deleteUser() {
           ></v-switch>
           <v-switch
               v-model="user.specialParentalConsent"
-              label="Erweiterte Einverständniserklärung"
+              label="Erweiterte Einverständniserklärung (nur für aktuelles Projekt)"
               :readonly="!editing"
               hide-details
           ></v-switch>
