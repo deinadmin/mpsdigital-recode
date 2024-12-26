@@ -35,8 +35,17 @@ async function resetPassword() {
   }
 }
 
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 
+function goToGroup() {
+  router.push('/gruppen/' + user.value.group.id)
+}
+
+function goToForm() {
+  router.push('/klassen/' + user.value.form.name)
+}
 
 
 async function getUserInfo() {
@@ -153,10 +162,12 @@ async function deleteUser() {
           <div style="display: flex">
             <v-text-field
                 v-if="user.form !== undefined"
-                v-model="user.form"
+                v-model="user.form.name"
                 label="Klasse"
                 outlined
-                readonly>
+                readonly
+                append-inner-icon="mdi-information-outline"
+                @click:append-inner="goToForm()">
             </v-text-field>
             <v-text-field
                 v-else
@@ -170,7 +181,9 @@ async function deleteUser() {
                 v-model="user.group.name"
                 label="Gruppe"
                 outlined
-                readonly>
+                readonly
+                append-inner-icon="mdi-information-outline"
+                @click:append-inner="goToGroup()">
             </v-text-field>
             <v-text-field
                 v-else

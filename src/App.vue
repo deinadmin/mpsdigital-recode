@@ -3,13 +3,7 @@ import OnboardingView from "@/views/OnboardingView.vue";
 
 const toastComponentRef = ref(null)
 import { computed } from 'vue';
-const ip = computed(() => {
-  if (import.meta.env.DEV) {
-    return import.meta.env.VITE_API_BASE_URL
-  } else {
-    return window.location.origin + '/api/'
-  }
-})
+let ip = ""
 
 // webhook
 import {onMounted, ref} from 'vue'
@@ -24,6 +18,12 @@ const user = ref(null)
 const userSettings = ref({})
 const dark = ref(false)
 onMounted(async () => {
+  if (import.meta.env.DEV) {
+    ip = import.meta.env.VITE_APP_BASE_URL
+  } else {
+    ip = window.location.origin + '/api/'
+  }
+
   await getUserInfo()
   console.log(user.value)
 })
