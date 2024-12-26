@@ -95,10 +95,12 @@ async function addUser() {
   console.log(newUser.value)
   newUser.value.username = newUser.value.username.replace(" ", "")
   try {
-    const response = await axios.post(props.ip + "user/" + newUser.value.username, {
+    const addedData = {
       role: newUser.value.role,
       form: newUser.value.role === 'student' ? newUser.value.form : undefined,
-    }, {withCredentials: true})
+    }
+    console.log(addedData)
+    const response = await axios.post(props.ip + "user/" + newUser.value.username, addedData, {withCredentials: true})
 
     if(response.status === 201) {
       showAddUser.value = false

@@ -158,7 +158,7 @@ async function createExcursion() {
       </v-card>
       <v-card v-if="props.user.role === 'admin'" title="Entwickleroptionen">
         <v-card-text>
-          <v-btn @click="createExcursion" color="info" prepend-icon="mdi-creation">AI-Antrag stellen</v-btn>
+          <v-btn disabled @click="createExcursion" color="info" prepend-icon="mdi-creation">AI-Antrag stellen</v-btn>
         </v-card-text>
       </v-card>
     </div>

@@ -37,6 +37,8 @@ async function resetPassword() {
 
 
 
+
+
 async function getUserInfo() {
 
   try {
@@ -54,7 +56,7 @@ async function getUserInfo() {
 
   } catch (error) {
     console.log(error)
-    toastRef.show({
+    props.toastRef.show({
       message: "Es ist ein Fehler aufgetreten.",
       color: "red"
     })
@@ -94,6 +96,30 @@ async function editUser() {
     editing.value = false
   } else {
     editing.value = true
+  }
+}
+
+async function deleteUser() {
+  try {
+    const response = await axios.delete(props.ip + "user/" + user.value.username, {withCredentials: true})
+    if (response.status === 200) {
+      props.toastRef.show({
+        message: "Der Benutzer wurde gelöscht.",
+        color: "info"
+      })
+      await props.fetchUserInfo()
+    } else {
+      props.toastRef.show({
+        message: "Es ist ein Fehler aufgetreten.",
+        color: "red"
+      })
+    }
+  } catch (error) {
+    console.log(error)
+    props.toastRef.show({
+      message: "Es ist ein Fehler aufgetreten.",
+      color: "red"
+    })
   }
 }
 
@@ -168,6 +194,9 @@ async function editUser() {
           ></v-switch>
         </div>
       </v-card-text>
+      <v-card-actions>
+        <v-btn color="red" variant="tonal" @click="deleteUser">Benutzer löschen</v-btn>
+      </v-card-actions>
     </v-card>
   </div>
   <div v-else>

@@ -52,8 +52,9 @@ async function logOut() {
 }
 
 async function getUserInfo() {
+  console.log("ip: ", ip)
   try {
-    const response = await axios.get("http://localhost:3001/api/account/", {withCredentials: true});
+    const response = await axios.get(ip + "account/", {withCredentials: true});
 
     if (response.status === 200) {
       loggedIn.value = true
