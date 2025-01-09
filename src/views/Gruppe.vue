@@ -225,7 +225,7 @@ function openUserDialog(username) {
       </v-card>
     </v-dialog>
     <v-dialog width="700px" v-model="showUserDialog">
-      <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" :fetchUserInfo="fetchGroup" />
+      <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" :fetchUserInfo="fetchGroup" v-model:showComponent="showUserDialog" />
     </v-dialog>
   </div>
 </template>

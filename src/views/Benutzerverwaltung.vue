@@ -188,7 +188,7 @@ const search = ref("")
       </v-card>
     </v-dialog>
     <v-dialog width="700px" v-model="showUserDialog">
-      <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" :fetchUserInfo="getUsers" />
+      <BenutzerComponent :ip="props.ip" :toastRef="toastRef" :username="currentUsername" :fetchUserInfo="getUsers" v-model:showComponent="showUserDialog" />
     </v-dialog>
   </div>
 </template>

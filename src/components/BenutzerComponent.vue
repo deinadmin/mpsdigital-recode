@@ -4,7 +4,8 @@ const props = defineProps({
   ip: String,
   toastRef: Object,
   username: String,
-  fetchUserInfo: Function  // Neue Prop für die Funktion
+  fetchUserInfo: Function,
+  showComponent: Boolean
 })
 import {ref, defineProps, watch, onMounted} from 'vue'
 import axios from "axios";
@@ -125,6 +126,8 @@ async function editUser() {
   }
 }
 
+const emit = defineEmits(['update:showComponent'])
+
 async function deleteUser() {
   try {
     const response = await axios.delete(props.ip + "user/" + user.value.username, {withCredentials: true})
@@ -134,6 +137,7 @@ async function deleteUser() {
         color: "info"
       })
       await props.fetchUserInfo()
+      emit('update:showComponent', false)
     } else {
       props.toastRef.show({
         message: "Es ist ein Fehler aufgetreten.",
