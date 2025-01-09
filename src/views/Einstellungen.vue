@@ -20,9 +20,17 @@ async function fetchUserSettings() {
   const response = await axios.get(props.ip + "account/settings", {withCredentials: true})
   userSettings.value = response.data
   if (Object.keys(userSettings.value).length === 0) {
-    userSettings.value = {
-      nickname: "",
-      dark: false
+    if (props.user.role === "student") {
+      userSettings.value = {
+        nickname: "",
+        dark: false
+      }
+    } else {
+      userSettings.value = {
+        nickname: "",
+        dark: false,
+        preferredForm: ""
+      }
     }
     await saveUserSettings()
   }
@@ -149,11 +157,12 @@ async function createExcursion() {
       <v-card title="Benutzerspezifisches">
         <v-card-text>
           <v-text-field v-model="userSettings.nickname" label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
-          <v-switch v-model="userSettings.dark" label="Dark Mode"></v-switch>
-          <p>Lade die Seite neu, um die Änderungen zu sehen.</p>
+          <v-switch style="margin-bottom: -22px" v-model="userSettings.dark" label="Dark Mode"></v-switch>
+          <v-text-field v-if="props.user.role !== 'student'" v-model="userSettings.preferredForm" label="Klasse" persistent-hint hint="Welche Klasse beaufsichtigst du am häufigsten?"></v-text-field>
+          <v-alert variant="outlined" style="font-size: 12px; margin-top: 15px; margin-bottom: -10px" color="info" density="compact" type="info">Lade die Seite neu, um die Änderungen zu sehen.</v-alert>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="saveUserSettings" color="primary">Speichern</v-btn>
+          <v-btn @click="saveUserSettings">Speichern</v-btn>
         </v-card-actions>
       </v-card>
       <v-card v-if="props.user.role === 'admin'" title="Entwickleroptionen">
