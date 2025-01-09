@@ -213,13 +213,13 @@ async function deleteUser() {
           <v-switch
               v-model="user.generalParentalConsent"
               label="Allgemeine Einverständniserklärung"
-              :readonly="!editing"
+              :disabled="!editing"
               hide-details
           ></v-switch>
           <v-switch
               v-model="user.specialParentalConsent"
               label="Erweiterte Einverständniserklärung (nur für aktuelles Projekt)"
-              :readonly="!editing"
+              :disabled="!editing"
               hide-details
           ></v-switch>
         </div>
