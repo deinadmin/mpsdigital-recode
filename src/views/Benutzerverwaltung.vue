@@ -133,14 +133,20 @@ const search = ref("")
   <div>
     <div class="search-bar-container">
       <h1 class="main">Benutzerverwaltung</h1>
-      <v-text-field style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
+      <v-tooltip location="top" text="Suche nach Benutzernamen, Rolle, Klasse oder Gruppe">
+        <template v-slot:activator="{ props }">
+          <v-text-field v-bind="props" style="margin-left: 10px; margin-bottom: -10px;" max-width="400px" v-model="search" hideDetails label="Suche" variant="outlined" density="compact" prepend-inner-icon="mdi-magnify"></v-text-field>
+        </template>
+      </v-tooltip>
     </div>
     <v-data-table
         hover
         :loading="users.length === 0"
         :headers="[
-          { title: 'Benutzername', value: 'username' },
-          { title: 'Rolle', value: 'role' },
+          { title: 'Benutzername', value: 'username', sortable: true },
+          { title: 'Rolle', value: 'role', sortable: true },
+          { title: 'Klasse', value: 'form.name', sortable: true },
+          { title: 'Gruppe', value: 'group[0].name', sortable: true },
         ]"
         :items="users"
         :search="search"
