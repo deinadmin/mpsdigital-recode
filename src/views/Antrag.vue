@@ -78,7 +78,7 @@ function openUserDialog(username) {
         </v-card>
         <v-card title="Gruppenmitglieder" :loading="group === null">
             <template v-if="group !== null" v-slot:append>
-                <v-chip :color="group.members.filter(member => member.generalParentalconsent).length === group.members.length ? 'green' : 'orange'">{{ group.members.filter(member => member.generalParentalconsent).length }} von {{ group.members.length }} Einverständniserklärungen</v-chip>
+                <v-chip :color="group.members.filter(member => member.generalParentalconsent).length === group.members.length ? 'green' : 'orange'">{{ group.members.filter(member => member.generalParentalconsent).length }} von {{ group.members.length }} allgemeinen Einverständniserklärungen</v-chip>
             </template>
             <v-card-text v-if="group !== null">
                 <v-list>
