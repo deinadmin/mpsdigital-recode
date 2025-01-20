@@ -12,6 +12,14 @@ const showNewPassword = ref(false)
 const showNewPasswordRepeat = ref(false)
 const userSettings = ref({})
 const dark = ref(false)
+const isValidClasses = ref(true)
+
+function validateClasses(classes) {
+  if (!classes) return true;
+  const classPattern = /^(\s*[A-Za-zÄäÖöÜüß0-9.]{1,5}\s*)(,\s*[A-Za-zÄäÖöÜüß0-9.]{1,5}\s*)*$/;
+  return classPattern.test(classes);
+}
+
 onMounted(() => {
   fetchUserSettings()
 })
@@ -38,6 +46,14 @@ async function fetchUserSettings() {
 }
 
 async function saveUserSettings() {
+  if (props.user.role !== 'student' && !validateClasses(userSettings.value.preferredForm)) {
+    props.toastRef.show({
+      message: "Ungültiges Klassenformat. Bitte geben Sie die Klassen im Format '5a, 5b, 6a' ein.",
+      color: "red"
+    })
+    return;
+  }
+
   const response = await axios.put(props.ip + "account/settings", userSettings.value, {withCredentials: true})
   if (response.status === 200) {
     props.toastRef.show({
@@ -158,7 +174,15 @@ async function createExcursion() {
         <v-card-text>
           <v-text-field v-model="userSettings.nickname" label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
           <v-switch style="margin-bottom: -22px" v-model="userSettings.dark" label="Dark Mode"></v-switch>
-          <v-text-field v-if="props.user.role !== 'student'" v-model="userSettings.preferredForm" label="Klasse" persistent-hint hint="Welche Klasse beaufsichtigst du am häufigsten?"></v-text-field>
+          <v-text-field 
+            v-if="props.user.role !== 'student'" 
+            v-model="userSettings.preferredForm" 
+            label="Klassen" 
+            persistent-hint 
+            hint="Mit Komma getrennt (z.B. 5a, 5b, 6a, 6b)"
+            :rules="[v => validateClasses(v) || 'Ungültiges Format. Beispiel: 5a, 5b, 6a']"
+            @input="isValidClasses = validateClasses(userSettings.preferredForm)"
+          ></v-text-field>
           <v-alert variant="outlined" style="font-size: 12px; margin-top: 15px; margin-bottom: -10px" color="info" density="compact" type="info">Lade die Seite neu, um die Änderungen zu sehen.</v-alert>
         </v-card-text>
         <v-card-actions>
