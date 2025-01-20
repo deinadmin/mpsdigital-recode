@@ -142,6 +142,25 @@ async function createExcursion() {
   <div class="main">
     <h1>Einstellungen</h1>
     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 20px; margin-right: 10px">
+      <v-card title="Benutzerspezifisches">
+        <v-card-text>
+          <v-text-field v-model="userSettings.nickname" label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
+          <v-switch style="margin-bottom: -22px" v-model="userSettings.dark" label="Dark Mode"></v-switch>
+          <v-text-field 
+            v-if="props.user.role !== 'student'" 
+            v-model="userSettings.preferredForm" 
+            label="Klassen" 
+            persistent-hint 
+            hint="Mit Komma getrennt (z.B. 5a, 5b, 6a, 6b)"
+            :rules="[v => validateClasses(v) || 'Ungültiges Format. Beispiel: 5a, 5b, 6a']"
+            @input="isValidClasses = validateClasses(userSettings.preferredForm)"
+          ></v-text-field>
+          <v-alert variant="outlined" style="font-size: 12px; margin-top: 15px; margin-bottom: -10px" color="info" density="compact" type="info">Lade die Seite neu, um die Änderungen zu sehen.</v-alert>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="saveUserSettings">Speichern</v-btn>
+        </v-card-actions>
+      </v-card>
       <v-card title="Passwort">
         <v-card-text>
           <v-form>
@@ -169,25 +188,6 @@ async function createExcursion() {
             <v-btn @click="changePassword" color="primary">Passwort ändern</v-btn>
           </v-form>
         </v-card-text>
-      </v-card>
-      <v-card title="Benutzerspezifisches">
-        <v-card-text>
-          <v-text-field v-model="userSettings.nickname" label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
-          <v-switch style="margin-bottom: -22px" v-model="userSettings.dark" label="Dark Mode"></v-switch>
-          <v-text-field 
-            v-if="props.user.role !== 'student'" 
-            v-model="userSettings.preferredForm" 
-            label="Klassen" 
-            persistent-hint 
-            hint="Mit Komma getrennt (z.B. 5a, 5b, 6a, 6b)"
-            :rules="[v => validateClasses(v) || 'Ungültiges Format. Beispiel: 5a, 5b, 6a']"
-            @input="isValidClasses = validateClasses(userSettings.preferredForm)"
-          ></v-text-field>
-          <v-alert variant="outlined" style="font-size: 12px; margin-top: 15px; margin-bottom: -10px" color="info" density="compact" type="info">Lade die Seite neu, um die Änderungen zu sehen.</v-alert>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn @click="saveUserSettings">Speichern</v-btn>
-        </v-card-actions>
       </v-card>
       <v-card v-if="props.user.role === 'admin'" title="Entwickleroptionen">
         <v-card-text>
