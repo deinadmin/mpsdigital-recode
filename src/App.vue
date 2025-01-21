@@ -18,12 +18,8 @@ const user = ref(null)
 const userSettings = ref({})
 const dark = ref(false)
 onMounted(async () => {
-  if (import.meta.env.DEV) {
-    ip = import.meta.env.VITE_APP_BASE_URL
-  } else {
-    ip = window.location.origin + '/api/'
-  }
-
+  ip = import.meta.env.VITE_APP_BASE_URL
+  console.log("Current API-IP is " + ip)
   await getUserInfo()
   console.log(user.value)
 })
