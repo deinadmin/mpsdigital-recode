@@ -55,7 +55,7 @@ async function fetchSettings() {
   <div class="main" style="margin-right: 15px; height: 100%;">
     <h1>Startseite</h1>
     <div style="display: flex; flex-direction: row; gap: 15px; justify-content: space-between; height: 100%;">
-      <v-card :loading="loadingStudentExcursions" style="width: 50%; height: 85vh;">
+      <v-card :loading="loadingStudentExcursions" class="attendance-card">
         <v-card-title><b>Anwesenheitsliste {{ new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) }} {{ settings.preferredForm ? "(" + settings.preferredForm +")" : "" }}</b></v-card-title>
         <v-card-subtitle>Verwalte die hier angezeigten Klassen in den Einstellungen.</v-card-subtitle>
         <v-card-text>
@@ -89,7 +89,7 @@ async function fetchSettings() {
           </div>
         </v-card-text>
       </v-card>
-      <v-card style="width: 50%; height: 85vh;">
+      <v-card class="requests-card" style="width: 50%; height: 85vh;">
         <v-card-title><b>Neueste Anträge</b></v-card-title>
         <template v-slot:extra>
         <v-btn
@@ -107,3 +107,25 @@ async function fetchSettings() {
     </div>
   </div>
 </template>
+
+<style scoped>
+.attendance-card {
+  width: 50%;
+  height: 85vh;
+}
+
+.requests-card {
+  width: 50%;
+  height: 85vh;
+}
+
+@media (max-width: 900px) {
+  .attendance-card {
+    width: 100%;
+  }
+  
+  .requests-card {
+    display: none;
+  }
+}
+</style>

@@ -141,7 +141,7 @@ async function createExcursion() {
 <template>
   <div class="main">
     <h1>Einstellungen</h1>
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 20px; margin-right: 10px">
+    <div class="settings-grid">
       <v-card title="Benutzerspezifisches">
         <v-card-text>
           <v-text-field v-model="userSettings.nickname" label="Spitzname" persistent-hint hint="Wie möchtest du genannt werden?"></v-text-field>
@@ -199,5 +199,16 @@ async function createExcursion() {
 </template>
 
 <style scoped>
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  margin-right: 10px;
+}
 
+@media (max-width: 900px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

@@ -6,11 +6,36 @@ import { computed } from 'vue';
 let ip = ""
 
 // webhook
-import {onMounted, ref} from 'vue'
+import {onMounted, ref, onBeforeMount, onBeforeUnmount} from 'vue'
 import AuthComponent from "@/components/AuthComponent.vue";
 import axios from 'axios'
 import ToastComponent from "@/components/ToastComponent.vue";
 import {useRouter} from "vue-router";
+
+const isMobile = ref(false)
+const drawerOpen = ref(true)
+const railMode = ref(false)
+
+const updateMobileStatus = () => {
+  isMobile.value = window.innerWidth < 900
+}
+
+const toggleDrawer = () => {
+  if (isMobile.value) {
+    drawerOpen.value = !drawerOpen.value
+  } else {
+    railMode.value = !railMode.value
+  }
+}
+
+onBeforeMount(() => {
+  updateMobileStatus()
+  window.addEventListener('resize', updateMobileStatus)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateMobileStatus)
+})
 
 const loaded = ref(false)
 const loggedIn = ref(false)
@@ -81,7 +106,7 @@ const smallMenu = ref(false)
     <v-layout style="height: 100%">
       <v-app-bar color="primary" density="compact" :title="userSettings.nickname ? ('Hey ' + userSettings.nickname + '!') : 'mPSdigital'" fixed>
         <template v-slot:prepend>
-          <v-app-bar-nav-icon v-if="loggedIn" @click="smallMenu = !smallMenu"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon v-if="loggedIn" @click="toggleDrawer"></v-app-bar-nav-icon>
         </template>
         <template v-slot:append>
           <v-btn v-if="loggedIn" @click="logOut" icon="mdi-logout"></v-btn>
@@ -90,8 +115,12 @@ const smallMenu = ref(false)
       <v-navigation-drawer
           color="dark"
           theme="dark"
-          permanent
-          :rail="smallMenu"
+          v-model="drawerOpen"
+          :permanent="!isMobile"
+          :temporary="isMobile"
+          :rail="!isMobile && railMode"
+          :location="isMobile ? 'start' : undefined"
+          :floating="isMobile"
       >
         <div v-if="loaded && loggedIn">
           <v-list
