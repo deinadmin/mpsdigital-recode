@@ -146,7 +146,7 @@ const search = ref("")
           { title: 'Benutzername', value: 'username', sortable: true },
           { title: 'Rolle', value: 'role', sortable: true },
           { title: 'Klasse', value: 'form.name', sortable: true },
-          { title: 'Gruppe', value: 'group[0].name', sortable: true },
+          { title: 'Gruppe', value: 'group.name', sortable: true },
         ]"
         :items="users"
         :search="search"

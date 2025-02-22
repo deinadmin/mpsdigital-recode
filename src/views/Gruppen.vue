@@ -19,7 +19,7 @@ async function getGroups() {
     const response = await axios.get(props.ip + "group", {withCredentials: true})
 
     if(response.status === 200) {
-      console.log(response.data)
+      console.log("groups", response.data)
       groups.value = response.data.groups
       loading.value = false
     }
