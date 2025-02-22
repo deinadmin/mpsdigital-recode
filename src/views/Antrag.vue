@@ -18,6 +18,10 @@ onMounted(async () => {
 const excursion = ref(null)
 const group = ref(null)
 
+function openPinboard() {
+  window.open(group.value.onlinePinboard, "_blank")
+}
+
 async function fetchExcursion() {
   try {
     const response = await axios.get(props.ip + "excursion/" + route.params.id, {withCredentials: true})
@@ -56,7 +60,7 @@ function openUserDialog(username) {
 </script>
 
 <template>
-  <div v-if="excursion === null" class="flex-center">
+  <div v-if="excursion === null || group === null" class="flex-center">
     <v-progress-circular
       indeterminate
       size="40"
@@ -74,6 +78,8 @@ function openUserDialog(username) {
                 <v-text-field :value="new Date(excursion.date).toLocaleDateString()" readonly></v-text-field>
                 <h3>Status</h3>
                 <v-chip :color="excursion.status === 'pending' ? 'orange' : (excursion.status === 'accepted' ? 'green' : 'red')">{{ excursion.status === 'pending' ? 'Ausstehend' : (excursion.status === 'accepted' ? 'Angenommen' : 'Abgelehnt') }}</v-chip>
+                <h3 style="margin-top: 10px;">Pinnwand</h3>
+                <v-btn :disabled="!group.onlinePinboard" prepend-icon="mdi-open-in-new" color="info" @click="openPinboard">Zur Pinnwand der Gruppe</v-btn>
             </v-card-text>
         </v-card>
         <v-card title="Gruppenmitglieder" :loading="group === null">
