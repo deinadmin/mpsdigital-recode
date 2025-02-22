@@ -64,10 +64,10 @@ const search = ref("")
         @click:row="handleRowClick"
     >
       <template v-slot:item.startDate="{ item }">
-        <span>{{ new Date(item.startDate).toLocaleString() }}</span>
+        <span>{{ new Date(item.startDate).toLocaleString('de-DE') }}</span>
       </template>
       <template v-slot:item.endDate="{ item }">
-        <span>{{ item.endDate === null ? 'Noch nicht festgelegt' : new Date(item.endDate).toLocaleString() }}</span>
+        <span>{{ item.endDate === null ? 'Noch nicht festgelegt' : new Date(item.endDate).toLocaleString('de-DE') }}</span>
       </template>
     </v-data-table>
   </div>

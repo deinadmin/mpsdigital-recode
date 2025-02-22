@@ -75,7 +75,7 @@ function openUserDialog(username) {
                 <h3>Beschreibung</h3>
                 <v-textarea auto-grow v-model="excursion.description" readonly></v-textarea>
                 <h3>Datum</h3>
-                <v-text-field :value="new Date(excursion.date).toLocaleDateString()" readonly></v-text-field>
+                <v-text-field :value="new Date(excursion.date).toLocaleDateString('de-DE')" readonly></v-text-field>
                 <h3>Status</h3>
                 <v-chip :color="excursion.status === 'pending' ? 'orange' : (excursion.status === 'accepted' ? 'green' : 'red')">{{ excursion.status === 'pending' ? 'Ausstehend' : (excursion.status === 'accepted' ? 'Angenommen' : 'Abgelehnt') }}</v-chip>
                 <h3 style="margin-top: 10px;">Pinnwand</h3>

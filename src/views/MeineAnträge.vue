@@ -119,7 +119,7 @@ async function addExcursion() {
         </v-chip>
       </template>
       <template v-slot:item.date="{ item }">
-        <span>{{ new Date(item.date).toLocaleDateString() }}</span>
+        <span>{{ new Date(item.date).toLocaleDateString('de-DE') }}</span>
       </template>
     </v-data-table>
   </div>

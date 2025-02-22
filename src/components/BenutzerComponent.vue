@@ -88,10 +88,12 @@ async function editUser() {
       
         if (user.value.specialParentalConsent) {
           // Add special consent
-          await axios.put(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {}, {withCredentials: true});
+          const response = await axios.put(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {}, {withCredentials: true});
+          console.log("special consent: ", response)
         } else {
           // Remove special consent
-          await axios.delete(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {withCredentials: true});
+          const response = await axios.delete(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {withCredentials: true});
+          console.log("special consent: ", response)
         }
       }
 

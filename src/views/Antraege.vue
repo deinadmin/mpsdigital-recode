@@ -98,7 +98,7 @@ const loading = ref(false)
         </v-chip>
       </template>
       <template v-slot:item.date="{ item }">
-        <span>{{ new Date(item.date).toLocaleDateString() }}</span>
+        <span>{{ new Date(item.date).toLocaleDateString('de-DE') }}</span>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-btn @click="(event) => setStatus(event, item.id, 'accepted')" :disabled="item.status === 'accepted'" size="small" flat style="margin-right: 6px" icon color="success">

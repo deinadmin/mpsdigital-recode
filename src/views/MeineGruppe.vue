@@ -21,8 +21,8 @@ async function fetchGroup() {
 
     if (response.status === 200) {
       group.value = response.data
-      startDate.value = new Date(group.value.startDate).toLocaleDateString()
-      endDate.value = group.value.endDate ? new Date(group.value.endDate).toLocaleDateString() : null
+      startDate.value = new Date(group.value.startDate).toLocaleDateString('de-DE')
+      endDate.value = group.value.endDate ? new Date(group.value.endDate).toLocaleDateString('de-DE') : null
     } else {
       props.toastRef.show({
         message: "Es ist ein Fehler aufgetreten.",
