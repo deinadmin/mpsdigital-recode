@@ -85,17 +85,13 @@ async function editUser() {
 
       // If the user is a student and in a group, handle special consent changes
       if (user.value.role === 'student' && user.value.group) {
-        const oldSpecialConsent = (await getUserInfo()).specialParentalConsent;
-        
-        // Only make API call if the consent status has changed
-        if (oldSpecialConsent !== user.value.specialParentalConsent) {
-          if (user.value.specialParentalConsent) {
-            // Add special consent
-            await axios.put(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {}, {withCredentials: true});
-          } else {
-            // Remove special consent
-            await axios.delete(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {withCredentials: true});
-          }
+      
+        if (user.value.specialParentalConsent) {
+          // Add special consent
+          await axios.put(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {}, {withCredentials: true});
+        } else {
+          // Remove special consent
+          await axios.delete(props.ip + `group/${user.value.group.id}/${user.value.username}/specialConsent`, {withCredentials: true});
         }
       }
 
